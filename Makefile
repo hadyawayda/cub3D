@@ -39,7 +39,7 @@ TOP_SRCS                := main.c init.c
 
 PARSING_SRCS            := parse.c parse_utils.c
 
-RENDERING_SRCS          := texture.c raycast_dda.c raycast_draw.c raycast_utils.c raycast.c render.c events.c cleanup.c
+RENDERING_SRCS          := texture.c raycast_dda.c raycast_draw.c render.c events.c cleanup.c
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PREFIX each group with its directory

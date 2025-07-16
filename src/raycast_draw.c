@@ -46,7 +46,7 @@ static void	compute_tex(t_cub *c, t_dda *d)
 		d->tex_x = c->tex[d->tex_id].img.w - d->tex_x - 1;
 }
 
-static void	plot_column(t_cub *c, t_dda *d, int x)
+static void	draw_tex_column(t_cub *c, t_dda *d, int x)
 {
 	int	y;
 	int	dy;
@@ -67,8 +67,11 @@ static void	plot_column(t_cub *c, t_dda *d, int x)
 	}
 }
 
-void	draw_column(t_cub *c, t_dda *d, int x)
+void	cast_column(t_cub *c, int x)
 {
-	compute_tex(c, d);
-	plot_column(c, d, x);
+	t_dda	d;
+
+	init_dda(c, &d, x);
+	compute_tex(c, &d);
+	draw_tex_column(c, &d, x);
 }

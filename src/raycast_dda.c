@@ -40,7 +40,7 @@ static void	set_delta_step(t_cub *c, t_dda *d)
 		d->side.y = (d->map_y + 1.0 - c->pl.pos.y) * d->delta.y;
 }
 
-void	run_dda(t_cub *c, t_dda *d)
+static void	run_dda(t_cub *c, t_dda *d)
 {
 	while (1)
 	{
