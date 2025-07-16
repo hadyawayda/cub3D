@@ -1,66 +1,109 @@
-# ---------------------------------------------------------------- Project name
-NAME        := cub3D
+# ──────────────────────────────────────────────────────────────────────────────
+# PROJECT DIRECTORIES
+# ──────────────────────────────────────────────────────────────────────────────
 
-# ---------------------------------------------------------------- Compiler / tools
-CC          := gcc
-AR          := ar rcs
+SRC_DIR                 := src
+LIBFT_DIR               := libft
+MLX_DIR                 := minilibx-linux
 
-# ---------------------------------------------------------------- Directories
-SRC_DIR     := src
-OBJ_DIR     := obj
-INC_DIR     := includes
-LIBFT_DIR   := libft
+# ──────────────────────────────────────────────────────────────────────────────
+# PROJECT SETTINGS
+# ──────────────────────────────────────────────────────────────────────────────
 
-# ---------------------------------------------------------------- Includes / flags
-INCLUDES    := -I $(INC_DIR) -I $(LIBFT_DIR) -I ./assets/minilibx-linux
-CFLAGS      := -Wall -Wextra -Werror -g $(INCLUDES)
+NAME                    := cub3D
+CC                      := gcc
+AR                      := ar rcs
+CFLAGS                  := -g -O0 -Wall -Wextra -Werror -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
+OBJDIR                  := objs
 
-# ---------------------------------------------------------------- Libraries
-LIBFT       := $(LIBFT_DIR)/libft.a
-MLX_FLAGS   := -L ./minilibx-linux -L /usr/lib/X11 \
-               -lmlx -lX11 -lXext -lXrender -lm
+# ──────────────────────────────────────────────────────────────────────────────
+# LIBRARIES (libft, MiniLibX)
+# ──────────────────────────────────────────────────────────────────────────────
 
-# ---------------------------------------------------------------- Source files (explicit list, no wildcard)
-SRCS        := \
-	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/init.c \
-	$(SRC_DIR)/parse.c \
-	$(SRC_DIR)/parse_utils.c \
-	$(SRC_DIR)/texture.c \
-	$(SRC_DIR)/raycast.c \
-	$(SRC_DIR)/render.c \
-	$(SRC_DIR)/events.c \
-	$(SRC_DIR)/cleanup.c
+LIBFT                   := $(LIBFT_DIR)/libft.a
 
-# ---------------------------------------------------------------- Object files
-OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+MLX_FLAGS               := -L $(MLX_DIR) -lmlx -lX11 -lXext -lXrender -lm
 
-# ---------------------------------------------------------------- Rules
-all: $(NAME)
+# ──────────────────────────────────────────────────────────────────────────────
+# DIRECTORY LAYOUT  (group sources into logical buckets)
+# ──────────────────────────────────────────────────────────────────────────────
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
+DIR						:= $(SRC_DIR)
 
-# Compile .c → .o into obj/
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+# ──────────────────────────────────────────────────────────────────────────────
+# SOURCE FILES   (just filenames; they get prefixed later)
+# ──────────────────────────────────────────────────────────────────────────────
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+TOP_SRCS                := main.c init.c
 
-# ---------------------------------------------------------------- Libft
+PARSING_SRCS            := parse.c parse_utils.c
+
+RENDERING_SRCS          := texture.c raycast.c render.c events.c cleanup.c
+
+# ──────────────────────────────────────────────────────────────────────────────
+# PREFIX each group with its directory
+# ──────────────────────────────────────────────────────────────────────────────
+
+TOP                     := $(addprefix $(DIR)/,$(TOP_SRCS))
+PARSING                 := $(addprefix $(DIR)/,$(PARSING_SRCS))
+RENDERING               := $(addprefix $(DIR)/,$(RENDERING_SRCS))
+
+# ──────────────────────────────────────────────────────────────────────────────
+# ALL SOURCE FILES & OBJECTS
+# ──────────────────────────────────────────────────────────────────────────────
+
+SRCS                    := $(TOP) $(PARSING) $(RENDERING)
+OBJS                    := $(patsubst %.c,$(OBJDIR)/%.o,$(SRCS))
+
+# ──────────────────────────────────────────────────────────────────────────────
+# DEFAULT TARGET
+# ──────────────────────────────────────────────────────────────────────────────
+
+all:                    $(NAME)
+
+# ──────────────────────────────────────────────────────────────────────────────
+# LINKING
+# ──────────────────────────────────────────────────────────────────────────────
+
+$(NAME):                $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $@
+
+# ──────────────────────────────────────────────────────────────────────────────
+# build libft automatically if missing
+# ──────────────────────────────────────────────────────────────────────────────
+
 $(LIBFT):
 	$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 
-# ---------------------------------------------------------------- House-keeping
+# ──────────────────────────────────────────────────────────────────────────────
+# PATTERN RULE  (.c → .o)
+# ──────────────────────────────────────────────────────────────────────────────
+
+$(OBJDIR)/%.o:          %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CLEAN TARGETS
+# ──────────────────────────────────────────────────────────────────────────────
+
 clean:
-	rm -rf $(OBJ_DIR)
-	$(MAKE) --no-print-directory clean -C $(LIBFT_DIR)
+	@rm -f $(OBJS)
+	@rm -rf $(OBJDIR)
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
 
-fclean: clean
-	rm -f $(NAME)
-	$(MAKE) --no-print-directory fclean -C $(LIBFT_DIR)
+fclean:                 clean
+	@rm -f $(NAME)
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 
-re: fclean all
+re:                     fclean all
 
-.PHONY: all clean fclean re
+# ──────────────────────────────────────────────────────────────────────────────
+# OPTIONAL VALGRIND / NORM TARGETS
+# ──────────────────────────────────────────────────────────────────────────────
+
+leaks:
+	valgrind --leak-check=full ./$(NAME)
+
+norm:
+	norminette | grep Error || true

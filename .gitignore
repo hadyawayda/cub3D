@@ -38,6 +38,7 @@
 
 # Binaries
 tester
+cub3D
 
 # Debug files
 *.dSYM/
