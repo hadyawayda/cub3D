@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 01:07:07 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 01:44:57 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_map
 
 typedef struct s_cub
 {
+	char		**raw_lines;
 	void		*mlx;
 	void		*win;
 	t_img		frame;
@@ -89,7 +90,6 @@ typedef struct s_dda
 	int		tex_x;
 }	t_dda;
 
-bool	init_game(t_cub *cub, char *file);
 bool	load_textures(t_cub *cub);
 bool	parse_file(t_cub *cub, char *path);
 bool	valid_cell(char ch);
@@ -100,11 +100,11 @@ int		draw_frame(t_cub *cub);
 int		on_keydown(int key, t_cub *cub);
 int		on_close(t_cub *cub);
 
-void	ft_split_free(char **arr);
 void	cast_column(t_cub *cub, int x);
 void	free_and_exit(t_cub *cub, int status, char *msg);
 void	init_dda(t_cub *c, t_dda *d, int x);
 void	perform_dda(t_cub *c, t_dda *d);
 void	draw_column(t_cub *c, t_dda *d, int x);
+void	free_lines(char **arr);
 
 #endif

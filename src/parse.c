@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 23:59:40 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 01:52:56 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,21 @@ static bool	store_rgb(char *s, int *col)
 
 	sp = ft_split(s, ',');
 	if (!sp || !sp[0] || !sp[1] || !sp[2] || sp[3])
-		return (false);
+	{
+		free_lines(sp);
+		return (free(sp), false);
+	}
 	r = ft_atoi(sp[0]);
 	g = ft_atoi(sp[1]);
 	b = ft_atoi(sp[2]);
-	ft_split_free(sp);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (false);
+	{
+		free_lines(sp);
+		return (free(sp), false);
+	}
 	*col = (r << 16) | (g << 8) | b;
-	return (true);
+	free_lines(sp);
+	return (free(sp), true);
 }
 
 static bool	load_elements(t_cub *c, char **lines, int *i)
@@ -110,8 +116,9 @@ bool	parse_file(t_cub *cub, char *path)
 
 	file = ft_file_to_str(path);
 	if (!file)
-		return (false);
+		return (free(file), false);
 	lines = ft_split(file, '\n');
+	cub->raw_lines = lines;
 	free(file);
 	if (!lines)
 		return (false);

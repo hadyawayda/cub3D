@@ -35,11 +35,11 @@ DIR						:= $(SRC_DIR)
 # SOURCE FILES   (just filenames; they get prefixed later)
 # ──────────────────────────────────────────────────────────────────────────────
 
-TOP_SRCS                := main.c init.c
+TOP_SRCS                := main.c
 
 PARSING_SRCS            := parse.c parse_utils.c
 
-RENDERING_SRCS          := texture.c raycast_dda.c raycast_draw.c render.c events.c cleanup.c
+RENDERING_SRCS          := raycast_dda.c raycast_draw.c render.c events.c cleanup.c
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PREFIX each group with its directory
@@ -104,7 +104,9 @@ re:                     fclean all
 # ──────────────────────────────────────────────────────────────────────────────
 
 leaks:
-	@valgrind --leak-check=full ./$(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) assets/maps/good/cheese_maze.cub
 
+qleaks:
+	@valgrind --leak-check=full -q ./$(NAME) assets/maps/good/cheese_maze.cub
 norm:
 	@norminette | grep Error || true
