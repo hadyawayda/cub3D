@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 01:44:57 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 02:31:12 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	free_and_exit(t_cub *cub, int status, char *msg);
 void	init_dda(t_cub *c, t_dda *d, int x);
 void	perform_dda(t_cub *c, t_dda *d);
 void	draw_column(t_cub *c, t_dda *d, int x);
-void	free_lines(char **arr);
+void	free_map(char **arr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 01:52:56 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 02:30:44 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,14 @@ static bool	store_rgb(char *s, int *col)
 
 	sp = ft_split(s, ',');
 	if (!sp || !sp[0] || !sp[1] || !sp[2] || sp[3])
-	{
-		free_lines(sp);
-		return (free(sp), false);
-	}
+		return (free_map(sp), false);
 	r = ft_atoi(sp[0]);
 	g = ft_atoi(sp[1]);
 	b = ft_atoi(sp[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-	{
-		free_lines(sp);
-		return (free(sp), false);
-	}
+		return (free_map(sp), false);
 	*col = (r << 16) | (g << 8) | b;
-	free_lines(sp);
-	return (free(sp), true);
+	return (free_map(sp), true);
 }
 
 static bool	load_elements(t_cub *c, char **lines, int *i)
@@ -111,21 +104,19 @@ static bool	parse_map(t_cub *c, char **lines, int start)
 bool	parse_file(t_cub *cub, char *path)
 {
 	char	*file;
-	char	**lines;
 	int		i;
 
 	file = ft_file_to_str(path);
 	if (!file)
 		return (free(file), false);
-	lines = ft_split(file, '\n');
-	cub->raw_lines = lines;
+	cub->raw_lines = ft_split(file, '\n');
 	free(file);
-	if (!lines)
+	if (!cub->raw_lines)
 		return (false);
 	i = 0;
-	if (!load_elements(cub, lines, &i) || !lines[i])
+	if (!load_elements(cub, cub->raw_lines, &i) || !cub->raw_lines[i])
 		return (false);
-	if (!parse_map(cub, lines, i))
+	if (!parse_map(cub, cub->raw_lines, i))
 		return (false);
 	return (true);
 }

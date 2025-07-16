@@ -5,7 +5,7 @@
 SRC_DIR                 := src
 LIBFT_DIR               := lib/libft
 MLX_DIR                 := assets/minilibx-linux
-
+SUPPRESS_X11			:= lib/x11.supp
 # ──────────────────────────────────────────────────────────────────────────────
 # PROJECT SETTINGS
 # ──────────────────────────────────────────────────────────────────────────────
@@ -104,9 +104,10 @@ re:                     fclean all
 # ──────────────────────────────────────────────────────────────────────────────
 
 leaks:
-	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) assets/maps/good/cheese_maze.cub
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
 
 qleaks:
-	@valgrind --leak-check=full -q ./$(NAME) assets/maps/good/cheese_maze.cub
+	@valgrind --leak-check=full -q --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
+
 norm:
 	@norminette | grep Error || true

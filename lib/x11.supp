@@ -1,0 +1,18 @@
+{
+   x11_writev_uninit
+   Memcheck:Leak
+   ...
+   obj:*/libxcb.so*
+}
+{
+   x11_writev_uninit
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so.*
+}
+{
+   x11_writev_uninit
+   Memcheck:Leak
+   ...
+   obj:*/libXext.so.*
+}
