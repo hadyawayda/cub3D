@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:22:30 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 20:22:30 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/16 23:56:59 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ int	on_keydown(int key, t_cub *c)
 		return (on_close(c));
 	if (key == 119)
 		move_player(c, (t_vec){c->pl.dir.x * MOVE_SPEED,
-				c->pl.dir.y * MOVE_SPEED});
+			c->pl.dir.y * MOVE_SPEED});
 	else if (key == 115)
 		move_player(c, (t_vec){-c->pl.dir.x * MOVE_SPEED,
-				-c->pl.dir.y * MOVE_SPEED});
+			-c->pl.dir.y * MOVE_SPEED});
 	else if (key == 97)
 		move_player(c, (t_vec){c->pl.dir.y * MOVE_SPEED,
-				-c->pl.dir.x * MOVE_SPEED});
+			-c->pl.dir.x * MOVE_SPEED});
 	else if (key == 100)
 		move_player(c, (t_vec){-c->pl.dir.y * MOVE_SPEED,
-				c->pl.dir.x * MOVE_SPEED});
+			c->pl.dir.x * MOVE_SPEED});
 	else if (key == 65361)
 		rotate(&c->pl, -ROT_SPEED);
 	else if (key == 65363)

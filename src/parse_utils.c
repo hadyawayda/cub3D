@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:04 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 19:41:04 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/16 23:59:14 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,10 @@ void	ft_split_free(char **arr)
 	while (arr && arr[i])
 		free(arr[i++]);
 	free(arr);
+}
+
+bool	valid_cell(char ch)
+{
+	return (ch == '0' || ch == '1' || ch == ' '
+		|| ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W');
 }

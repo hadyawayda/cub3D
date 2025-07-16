@@ -103,7 +103,7 @@ re:                     fclean all
 # ──────────────────────────────────────────────────────────────────────────────
 
 leaks:
-	valgrind --leak-check=full ./$(NAME)
+	@valgrind --leak-check=full ./$(NAME)
 
 norm:
-	norminette | grep Error || true
+	@norminette | grep Error || true

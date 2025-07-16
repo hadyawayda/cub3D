@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 19:40:54 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/16 23:59:40 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static bool	load_elements(t_cub *c, char **lines, int *i)
 		else if (!ft_strncmp(lines[*i], "F ", 2))
 		{
 			if (!store_rgb(lines[*i] + 2, &c->floor_col))
-			return (false);
+				return (false);
 		}
 		else if (!ft_strncmp(lines[*i], "C ", 2))
 		{
 			if (!store_rgb(lines[*i] + 2, &c->ceil_col))
-			return (false);
+				return (false);
 		}
 		else
 			break ;
@@ -76,12 +76,6 @@ static bool	set_player(t_cub *c, int x, int y, char ch)
 		c->pl.dir = (t_vec){-1, 0};
 	c->pl.plane = (t_vec){-0.66 * c->pl.dir.y, 0.66 * c->pl.dir.x};
 	return (true);
-}
-
-static bool	valid_cell(char ch)
-{
-	return (ch == '0' || ch == '1' || ch == ' '
-		|| ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W');
 }
 
 static bool	parse_map(t_cub *c, char **lines, int start)

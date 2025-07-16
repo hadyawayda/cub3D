@@ -63,6 +63,7 @@ typedef struct s_cub
 bool	init_game(t_cub *cub, char *file);
 bool	load_textures(t_cub *cub);
 bool	parse_file(t_cub *cub, char *path);
+bool	valid_cell(char ch);
 
 char	*ft_file_to_str(char *path);
 

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:10 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 19:41:10 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:01:20 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	load_textures(t_cub *c)
 	{
 		if (!load_tex(c, &c->tex[i], (char *)c->tex[i].img.ptr))
 			return (false);
-		free(c->tex[i].img.ptr); /* path string no longer needed */
+		free(c->tex[i].img.ptr);
 	}
 	return (true);
 }

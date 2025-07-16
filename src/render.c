@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:31 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 19:41:31 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:01:05 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static void	draw_ceiling_floor(t_cub *c)
 		x = -1;
 		while (++x < WIDTH)
 			*(int *)(c->frame.addr + y * c->frame.line_len
-				+ x * (c->frame.bpp / 8)) = c->ceil_col;
+					+ x * (c->frame.bpp / 8)) = c->ceil_col;
 	}
 	while (y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
 			*(int *)(c->frame.addr + y * c->frame.line_len
-				+ x * (c->frame.bpp / 8)) = c->floor_col;
+					+ x * (c->frame.bpp / 8)) = c->floor_col;
 		y++;
 	}
 }
