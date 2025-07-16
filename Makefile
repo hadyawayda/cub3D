@@ -3,8 +3,8 @@
 # ──────────────────────────────────────────────────────────────────────────────
 
 SRC_DIR                 := src
-LIBFT_DIR               := libft
-MLX_DIR                 := minilibx-linux
+LIBFT_DIR               := lib/libft
+MLX_DIR                 := assets/minilibx-linux
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PROJECT SETTINGS
@@ -13,7 +13,7 @@ MLX_DIR                 := minilibx-linux
 NAME                    := cub3D
 CC                      := gcc
 AR                      := ar rcs
-CFLAGS                  := -g -O0 -Wall -Wextra -Werror -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
+CFLAGS                  := -g -O0 -Wall -Wextra -Werror -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
 OBJDIR                  := objs
 
 # ──────────────────────────────────────────────────────────────────────────────
