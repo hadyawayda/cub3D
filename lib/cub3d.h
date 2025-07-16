@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
+/*   Updated: 2025/07/17 00:51:29 by hawayda          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -60,6 +72,23 @@ typedef struct s_cub
 	t_map		map;
 }	t_cub;
 
+typedef struct s_dda
+{
+	t_vec	ray;
+	t_vec	delta;
+	t_vec	step;
+	t_vec	side;
+	int		map_x;
+	int		map_y;
+	int		side_hit;
+	double	perp_dist;
+	int		line_h;
+	int		draw_s;
+	int		draw_e;
+	int		tex_id;
+	int		tex_x;
+}	t_dda;
+
 bool	init_game(t_cub *cub, char *file);
 bool	load_textures(t_cub *cub);
 bool	parse_file(t_cub *cub, char *path);
@@ -74,5 +103,8 @@ int		on_close(t_cub *cub);
 void	ft_split_free(char **arr);
 void	cast_column(t_cub *cub, int x);
 void	free_and_exit(t_cub *cub, int status, char *msg);
+void	init_dda(t_cub *c, t_dda *d, int x);
+void	perform_dda(t_cub *c, t_dda *d);
+void	draw_tex_column(t_cub *c, t_dda *d, int x);
 
 #endif

@@ -12,7 +12,8 @@ MLX_DIR                 := assets/minilibx-linux
 
 NAME                    := cub3D
 CC                      := gcc
-AR                      := ar rcs
+AR                      := @ar rcs
+RM                      := @rm -rf
 CFLAGS                  := -g -O0 -Wall -Wextra -Werror -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
 OBJDIR                  := objs
 
@@ -38,7 +39,7 @@ TOP_SRCS                := main.c init.c
 
 PARSING_SRCS            := parse.c parse_utils.c
 
-RENDERING_SRCS          := texture.c raycast.c render.c events.c cleanup.c
+RENDERING_SRCS          := texture.c raycast_dda.c raycast_draw.c raycast_utils.c raycast.c render.c events.c cleanup.c
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PREFIX each group with its directory
@@ -66,14 +67,14 @@ all:                    $(NAME)
 # ──────────────────────────────────────────────────────────────────────────────
 
 $(NAME):                $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $@
 
 # ──────────────────────────────────────────────────────────────────────────────
 # build libft automatically if missing
 # ──────────────────────────────────────────────────────────────────────────────
 
 $(LIBFT):
-	$(MAKE) --no-print-directory -C $(LIBFT_DIR)
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PATTERN RULE  (.c → .o)
@@ -81,7 +82,7 @@ $(LIBFT):
 
 $(OBJDIR)/%.o:          %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # ──────────────────────────────────────────────────────────────────────────────
 # CLEAN TARGETS

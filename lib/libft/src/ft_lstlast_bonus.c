@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_file_to_str.c                                   :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/16 20:06:59 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 20:06:59 by hawayda          ###   ########.fr       */
+/*   Created: 2025/07/16 20:09:38 by hawayda           #+#    #+#             */
+/*   Updated: 2025/07/17 00:02:25 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_max(int a, int b)
+t_list	*ft_lstlast(t_list *lst)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
 }

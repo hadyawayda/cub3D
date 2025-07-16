@@ -1,9 +1,10 @@
 NAME =		libft.a
 CC =		gcc
-CFLAGS =	-Wall -Wextra -Werror
-RM =		@rm -f
+CFLAGS =	-Wall -Wextra -Werror -I. -g -O0
+RM =		@rm -rf
+AR =		@ar rcs
 
-SRCS =		ft_atoi.c \
+SRC_FILES =	ft_atoi.c \
 			ft_bzero.c \
 			ft_calloc.c \
 			ft_is_only_whitespace.c \
@@ -62,18 +63,26 @@ SRCS =		ft_atoi.c \
 			ft_tolower.c \
 			ft_toupper.c \
 
-OBJS =		$(SRCS:.c=.o)
+SRC_DIR =	src
+OBJ_DIR =	obj
 
-all: $(NAME)
+SRCS =		$(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS =		$(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+
+all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@ar rcs $(NAME) $(OBJS)
+			$(AR) $(NAME) $(OBJS)
 
-%.o:		%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+			@mkdir -p $(OBJ_DIR)
+			@$(CC) $(CFLAGS) -c $< -o $@
+
+%.o:		$(SRC_DIR)/%.c
 			@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-			$(RM) $(OBJS)
+			$(RM) $(OBJS) $(OBJ_DIR)
 
 fclean:		clean
 			$(RM) $(NAME)

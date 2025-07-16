@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:10 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 00:01:20 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:30:00 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,16 @@ static bool	load_tex(t_cub *c, t_tex *t, char *path)
 
 bool	load_textures(t_cub *c)
 {
-	int	i;
+	int		i;
+	char	*path;
 
 	i = -1;
 	while (++i < 4)
 	{
-		if (!load_tex(c, &c->tex[i], (char *)c->tex[i].img.ptr))
+		path = (char *)c->tex[i].img.ptr;
+		if (!load_tex(c, &c->tex[i], path))
 			return (false);
-		free(c->tex[i].img.ptr);
+		free(path);
 	}
 	return (true);
 }
