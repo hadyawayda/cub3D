@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 02:30:44 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 16:47:21 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ static bool	store_rgb(char *s, int *col)
 	return (free_map(sp), true);
 }
 
+/*
+**  Read all the “NO SO WE EA F C” lines in any order, advance *i past them,
+**  and leave *i pointing at the first map line.  On any parse failure
+**  store c->err and return false.  Finally call check_required_elements().
+*/
 static bool	load_elements(t_cub *c, char **lines, int *i)
 {
 	while (lines[*i] && *lines[*i])
@@ -57,7 +62,7 @@ static bool	load_elements(t_cub *c, char **lines, int *i)
 			break ;
 		(*i)++;
 	}
-	return (true);
+	return (check_required_elements(c));
 }
 
 static bool	set_player(t_cub *c, int x, int y, char ch)

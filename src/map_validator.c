@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:25:16 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 10:25:16 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 16:41:34 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,16 @@ static bool	check_walls(const t_map *m)
 	return (true);
 }
 
-/* ────────────────────────────────────────────────────────────────────────── */
-/* public entry – returns false on the first rule violation                  */
-bool	map_validator(t_cub *cub)
+/*
+**  Phase 1: Check that every grid cell is a valid char,
+**  and that exactly one player appears.
+*/
+static bool	validate_content(const t_map *m, t_cub *cub)
 {
-	const t_map	*m;
-	int			y;
-	int			x;
-	int			player;
+	int	y;
+	int	x;
+	int	player;
 
-	cub->err = NULL;
-	m = &cub->map;
-	if (m->h < 3 || m->w < 3)
-		return (cub->err = "Map too small.", false);
 	player = 0;
 	y = -1;
 	while (++y < m->h)
@@ -81,11 +78,27 @@ bool	map_validator(t_cub *cub)
 			if (!ft_strchr(VALID_CHARS, m->grid[y][x]))
 				return (cub->err = "Invalid character.", false);
 			if (ft_strchr("NSEW", m->grid[y][x]) && ++player > 1)
-				return (cub->err = "Multiple playerss", false);
+				return (cub->err = "Multiple players", false);
 		}
 	}
 	if (player != 1)
 		return (cub->err = "No player found.", false);
+	return (true);
+}
+
+/*
+**  Phase 2: Dimensions + walls + content.
+*/
+bool	map_validator(t_cub *cub)
+{
+	const t_map	*m;
+
+	cub->err = NULL;
+	m = &cub->map;
+	if (m->h < 3 || m->w < 3)
+		return (cub->err = "Map too small.", false);
+	if (!validate_content(m, cub))
+		return (false);
 	if (!check_walls(m))
 		return (cub->err = "Map not closed.", false);
 	return (true);

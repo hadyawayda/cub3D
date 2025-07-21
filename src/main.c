@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:38:11 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 14:13:10 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 15:24:06 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_putendl_fd("Error\nUsage: ./cub3D <map.cub>", 2), 1);
 	ft_bzero(&cub, sizeof(cub));
+	cub.floor_col = -1;
+	cub.ceil_col = -1;
 	if (!parse_file(&cub, argv[1]) || !map_validator(&cub))
 	{
 		if (cub.err)

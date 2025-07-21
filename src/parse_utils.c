@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:04 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 00:07:14 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 16:46:33 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,16 @@ bool	valid_cell(char ch)
 {
 	return (ch == '0' || ch == '1' || ch == ' '
 		|| ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W');
+}
+
+/*
+**  After scanning all lines, ensure each texture path and both colors were set.
+*/
+bool	check_required_elements(t_cub *c)
+{
+	if (!c->tex[0].img.ptr || !c->tex[1].img.ptr
+		|| !c->tex[2].img.ptr || !c->tex[3].img.ptr
+		|| c->floor_col == -1 || c->ceil_col == -1)
+		return (c->err = "Missing element", false);
+	return (true);
 }
