@@ -6,15 +6,15 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 22:40:19 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 22:58:01 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define WIDTH  1280
-# define HEIGHT  720
+# define WIDTH  1920
+# define HEIGHT 1080
 
 # include <stdlib.h>
 # include <unistd.h>
