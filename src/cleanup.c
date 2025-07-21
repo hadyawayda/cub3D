@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:47 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 02:31:50 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 10:36:57 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_map(char **map)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!map)

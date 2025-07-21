@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 02:31:12 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 10:33:13 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_map
 typedef struct s_cub
 {
 	char		**raw_lines;
+	char		*err;
 	void		*mlx;
 	void		*win;
 	t_img		frame;
@@ -93,6 +94,7 @@ typedef struct s_dda
 bool	load_textures(t_cub *cub);
 bool	parse_file(t_cub *cub, char *path);
 bool	valid_cell(char ch);
+bool	map_validator(t_cub *cub);
 
 char	*ft_file_to_str(char *path);
 

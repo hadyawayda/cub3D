@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:38:11 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/17 01:10:41 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:13:10 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ bool	load_textures(t_cub *c)
 	return (true);
 }
 
-bool	init_game(t_cub *cub, char *file)
+bool	init_game(t_cub *cub)
 {
-	ft_bzero(cub, sizeof(*cub));
-	if (!parse_file(cub, file))
-		return (false);
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		return (false);
@@ -60,11 +57,20 @@ int	main(int argc, char **argv)
 	t_cub	cub;
 
 	if (argc != 2)
+		return (ft_putendl_fd("Error\nUsage: ./cub3D <map.cub>", 2), 1);
+	ft_bzero(&cub, sizeof(cub));
+	if (!parse_file(&cub, argv[1]) || !map_validator(&cub))
 	{
-		ft_putendl_fd("Error\nUsage: ./cub3D <map.cub>", 2);
+		if (cub.err)
+		{
+			ft_putstr_fd("Error!\n", 2);
+			ft_putendl_fd(cub.err, 2);
+		}
+		else
+			ft_putendl_fd("Error!\nInvalid map file.", 2);
 		return (1);
 	}
-	if (!init_game(&cub, argv[1]))
+	if (!init_game(&cub))
 		return (1);
 	mlx_loop_hook(cub.mlx, draw_frame, &cub);
 	mlx_hook(cub.win, 2, 1L << 0, on_keydown, &cub);

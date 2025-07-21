@@ -37,7 +37,7 @@ DIR						:= $(SRC_DIR)
 
 TOP_SRCS                := main.c
 
-PARSING_SRCS            := parse.c parse_utils.c
+PARSING_SRCS            := map_validator.c parse.c parse_utils.c
 
 RENDERING_SRCS          := raycast_dda.c raycast_draw.c render.c events.c cleanup.c
 
