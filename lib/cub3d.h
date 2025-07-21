@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 16:46:40 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 22:40:19 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void	init_dda(t_cub *c, t_dda *d, int x);
 void	perform_dda(t_cub *c, t_dda *d);
 void	draw_column(t_cub *c, t_dda *d, int x);
 void	free_map(char **arr);
+void	fill_spaces_with_walls(char **grid, int h, int w);
 
 #endif

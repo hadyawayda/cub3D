@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 16:47:21 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 22:39:54 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ static bool	set_player(t_cub *c, int x, int y, char ch)
 
 static bool	parse_map(t_cub *c, char **lines, int start)
 {
-	int		y;
-	int		x;
+	int	y;
+	int	x;
 
 	c->map.grid = &lines[start];
 	c->map.h = 0;
@@ -98,9 +98,9 @@ static bool	parse_map(t_cub *c, char **lines, int start)
 		c->map.w = ft_max(c->map.w, (int)ft_strlen(lines[start + y]));
 		x = -1;
 		while (lines[start + y][++x])
-			if (!valid_cell(lines[start + y][x])
-				|| (ft_strchr("NSEW", lines[start + y][x])
-					&& !set_player(c, x, y, lines[start + y][x])))
+			if (!valid_cell(lines[start + y][x]) || (ft_strchr("NSEW",
+						lines[start + y][x]) && !set_player(c, x, y, lines[start
+						+ y][x])))
 				return (false);
 	}
 	return (c->pl.pos.x != 0);
@@ -123,5 +123,6 @@ bool	parse_file(t_cub *cub, char *path)
 		return (false);
 	if (!parse_map(cub, cub->raw_lines, i))
 		return (false);
+	fill_spaces_with_walls(cub->map.grid, cub->map.h, cub->map.w);
 	return (true);
 }
