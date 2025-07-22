@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:38:11 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 15:24:06 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 23:14:35 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static bool	load_tex(t_cub *c, t_tex *t, char *path)
 	t->img.ptr = mlx_xpm_file_to_image(c->mlx, path, &t->img.w, &t->img.h);
 	if (!t->img.ptr)
 		return (false);
-	t->img.addr = mlx_get_data_addr(t->img.ptr, &t->img.bpp,
-			&t->img.line_len, &t->img.endian);
+	t->img.addr = mlx_get_data_addr(t->img.ptr, &t->img.bpp, &t->img.line_len,
+			&t->img.endian);
 	return (true);
 }
 
@@ -38,7 +38,7 @@ bool	load_textures(t_cub *c)
 	return (true);
 }
 
-bool	init_game(t_cub *cub)
+bool	initialize_assets(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
@@ -47,8 +47,34 @@ bool	init_game(t_cub *cub)
 		return (false);
 	cub->win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
 	cub->frame.ptr = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	cub->frame.addr = mlx_get_data_addr(cub->frame.ptr,
-			&cub->frame.bpp, &cub->frame.line_len, &cub->frame.endian);
+	cub->frame.addr = mlx_get_data_addr(cub->frame.ptr, &cub->frame.bpp,
+			&cub->frame.line_len, &cub->frame.endian);
+	return (true);
+}
+
+/*
+** Zero out cub, set default colors, parse + validate.
+** Returns true on success, or prints the appropriate
+** error and returns false on failure.
+*/
+static bool	setup_and_validate(t_cub *cub, char *path)
+{
+	ft_bzero(cub, sizeof(*cub));
+	cub->floor_col = -1;
+	cub->ceil_col = -1;
+	if (!parse_file(cub, path) || !map_validator(cub))
+	{
+		if (cub->err)
+		{
+			ft_putstr_fd("Error!\n", 2);
+			ft_putendl_fd(cub->err, 2);
+		}
+		else
+		{
+			ft_putendl_fd("Error!\nInvalid map file.", 2);
+		}
+		return (false);
+	}
 	return (true);
 }
 
@@ -58,21 +84,11 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_putendl_fd("Error\nUsage: ./cub3D <map.cub>", 2), 1);
-	ft_bzero(&cub, sizeof(cub));
-	cub.floor_col = -1;
-	cub.ceil_col = -1;
-	if (!parse_file(&cub, argv[1]) || !map_validator(&cub))
-	{
-		if (cub.err)
-		{
-			ft_putstr_fd("Error!\n", 2);
-			ft_putendl_fd(cub.err, 2);
-		}
-		else
-			ft_putendl_fd("Error!\nInvalid map file.", 2);
+	if (!is_cub_file(argv[1]))
+		return (ft_putendl_fd("Error\nInvalid file type.", 2), 1);
+	if (!setup_and_validate(&cub, argv[1]))
 		return (1);
-	}
-	if (!init_game(&cub))
+	if (!initialize_assets(&cub))
 		return (1);
 	mlx_loop_hook(cub.mlx, draw_frame, &cub);
 	mlx_hook(cub.win, 2, 1L << 0, on_keydown, &cub);

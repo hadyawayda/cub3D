@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:25:16 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 16:41:34 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/21 23:10:20 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static bool	check_walls(const t_map *m)
 			if (y == 0 || x == 0 || y == m->h - 1 || x == row_len - 1)
 				return (false);
 			if (safe_cell(m, y, x - 1) == ' ' || safe_cell(m, y, x + 1) == ' '
-				|| safe_cell(m, y - 1, x) == ' '
-				|| safe_cell(m, y + 1, x) == ' ')
+				|| safe_cell(m, y - 1, x) == ' ' || safe_cell(m, y + 1,
+					x) == ' ')
 				return (false);
 		}
 	}

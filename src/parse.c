@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 22:39:54 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 00:30:59 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,64 @@ static bool	store_rgb(char *s, int *col)
 }
 
 /*
-**  Read all the “NO SO WE EA F C” lines in any order, advance *i past them,
-**  and leave *i pointing at the first map line.  On any parse failure
-**  store c->err and return false.  Finally call check_required_elements().
+**  Skip over any empty lines (elements can be separated by blank lines).
 */
-static bool	load_elements(t_cub *c, char **lines, int *i)
+static void	skip_empty_lines(char **lines, int *i)
 {
-	while (lines[*i] && *lines[*i])
+	while (lines[*i] && lines[*i][0] == '\0')
+		(*i)++;
+}
+
+/*
+**  Parse F and C exactly once each.  Advances *i past them.
+*/
+static bool	parse_colors(t_cub *c, char **lines, int *i)
+{
+	bool	floor_seen;
+	bool	ceil_seen;
+
+	floor_seen = false;
+	ceil_seen = false;
+	while (lines[*i] && lines[*i][0] != '\0')
 	{
-		if (!ft_strncmp(lines[*i], "NO ", 3))
-			c->tex[0].img.ptr = ft_strdup(lines[*i] + 3);
-		else if (!ft_strncmp(lines[*i], "SO ", 3))
-			c->tex[1].img.ptr = ft_strdup(lines[*i] + 3);
-		else if (!ft_strncmp(lines[*i], "WE ", 3))
-			c->tex[2].img.ptr = ft_strdup(lines[*i] + 3);
-		else if (!ft_strncmp(lines[*i], "EA ", 3))
-			c->tex[3].img.ptr = ft_strdup(lines[*i] + 3);
-		else if (!ft_strncmp(lines[*i], "F ", 2))
+		if (!ft_strncmp(lines[*i], "F ", 2))
 		{
+			if (floor_seen)
+				return (c->err = "Duplicate floor color", false);
 			if (!store_rgb(lines[*i] + 2, &c->floor_col))
 				return (false);
+			floor_seen = true;
 		}
 		else if (!ft_strncmp(lines[*i], "C ", 2))
 		{
+			if (ceil_seen)
+				return (c->err = "Duplicate ceiling color", false);
 			if (!store_rgb(lines[*i] + 2, &c->ceil_col))
 				return (false);
+			ceil_seen = true;
 		}
 		else
 			break ;
 		(*i)++;
 	}
+	if (!floor_seen || !ceil_seen)
+		return (c->err = "Missing floor or ceiling color", false);
+	return (true);
+}
+
+/*
+**  load_elements: first textures, then colors, skipping blanks between.
+**  *i should point at the first map-line when this returns true.
+*/
+bool	load_elements(t_cub *c, char **lines, int *i)
+{
+	skip_empty_lines(lines, i);
+	if (!parse_textures(c, lines, i))
+		return (false);
+	skip_empty_lines(lines, i);
+	if (!parse_colors(c, lines, i))
+		return (false);
+	skip_empty_lines(lines, i);
 	return (check_required_elements(c));
 }
 
