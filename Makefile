@@ -104,8 +104,8 @@ re:                     fclean all
 # ──────────────────────────────────────────────────────────────────────────────
 
 leaks:
-	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/bad/textures_duplicates.cub
-
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
+	
 qleaks:
 	@valgrind --leak-check=full -q --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
 

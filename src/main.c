@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:38:11 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 16:04:55 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 19:45:01 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ int	main(int argc, char **argv)
 	if (!is_cub_file(argv[1]))
 		return (ft_putendl_fd("Error\nInvalid file type.", 2), 1);
 	if (!setup_and_validate(&cub, argv[1]))
-		return (on_close(&cub), 1);
+		return (1);
 	if (!initialize_assets(&cub))
-		return (on_close(&cub), 1);
+		return (1);
 	mlx_loop_hook(cub.mlx, draw_frame, &cub);
 	mlx_hook(cub.win, 2, 1L << 0, on_keydown, &cub);
+	mlx_hook(cub.win, 3, 1L << 1, on_keyup, &cub);
 	mlx_hook(cub.win, 17, 1L << 17, on_close, &cub);
 	mlx_loop(cub.mlx);
 	return (0);
