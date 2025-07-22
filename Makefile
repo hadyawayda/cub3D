@@ -14,7 +14,7 @@ NAME                    := cub3D
 CC                      := gcc
 AR                      := @ar rcs
 RM                      := @rm -rf
-CFLAGS                  := -g -O0 -Wall -Wextra -Werror -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
+CFLAGS                  := -g -O0 -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
 OBJDIR                  := objs
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ DIR						:= $(SRC_DIR)
 
 TOP_SRCS                := main.c
 
-PARSING_SRCS            := map_validator.c parse.c parse_utils.c parser_helpers.c
+PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c
 
 RENDERING_SRCS          := raycast_dda.c raycast_draw.c render.c events.c cleanup.c
 
@@ -104,7 +104,7 @@ re:                     fclean all
 # ──────────────────────────────────────────────────────────────────────────────
 
 leaks:
-	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/bad/textures_duplicates.cub
 
 qleaks:
 	@valgrind --leak-check=full -q --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub

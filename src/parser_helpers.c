@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 22:39:14 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 00:27:44 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:47:03 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,41 +58,64 @@ static bool	set_tex_path(t_cub *c, int idx, char *path, bool seen[4])
 }
 
 /*
-**  Parse only the four texture lines, in any order, no duplicates allowed.
-**  Leaves *i pointing at the first non-texture line.
+**  Try to parse one texture line.  If 'line' begins with NO/SO/WE/EA + space,
+**  dup the path, validate .xpm extension and duplicates, store into c->tex[id].
+**  On success returns true and writes the numeric id; on non‐texture line
+**  returns false; on error sets c->err and returns false as well.
+*/
+static bool	parse_texture_line(t_cub *c, char *line, int *out_id)
+{
+	int		id;
+	char	*path;
+
+	if (!ft_strncmp(line, "NO ", 3))
+		id = 0;
+	else if (!ft_strncmp(line, "SO ", 3))
+		id = 1;
+	else if (!ft_strncmp(line, "WE ", 3))
+		id = 2;
+	else if (!ft_strncmp(line, "EA ", 3))
+		id = 3;
+	else
+		return (false);
+	if (c->tex[id].img.ptr)
+		return (c->err = "Duplicate texture identifier", false);
+	path = ft_strdup(line + 3);
+	if (!path)
+		return (c->err = "Allocation failure", false);
+	if (!has_xpm_ext(path))
+		return (free(path), c->err = "Texture not .xpm", false);
+	c->tex[id].img.ptr = path;
+	*out_id = id;
+	return (true);
+}
+
+/*
+**  Loop through exactly four texture lines at &lines[*i].  For each one:
+**    - parse_texture_line (dup + .xpm check)
+**    - then open()/close() that path to verify it exists
+**  On any failure we free the dup’d path, set c->err and return false.
 */
 bool	parse_textures(t_cub *c, char **lines, int *i)
 {
-	bool	seen[4];
+	int	id;
+	int	fd;
+	int	count;
 
-	ft_bzero(seen, sizeof(seen));
-	while (lines[*i] && *lines[*i] != '\0')
+	count = 0;
+	while (lines[*i] && *lines[*i])
 	{
-		if (!ft_strncmp(lines[*i], "NO ", 3))
-		{
-			if (!set_tex_path(c, 0, lines[*i] + 3, seen))
-				return (false);
-		}
-		else if (!ft_strncmp(lines[*i], "SO ", 3))
-		{
-			if (!set_tex_path(c, 1, lines[*i] + 3, seen))
-				return (false);
-		}
-		else if (!ft_strncmp(lines[*i], "WE ", 3))
-		{
-			if (!set_tex_path(c, 2, lines[*i] + 3, seen))
-				return (false);
-		}
-		else if (!ft_strncmp(lines[*i], "EA ", 3))
-		{
-			if (!set_tex_path(c, 3, lines[*i] + 3, seen))
-				return (false);
-		}
-		else
+		if (!parse_texture_line(c, lines[*i], &id))
 			break ;
+		fd = open(c->tex[id].img.ptr, O_RDONLY);
+		if (fd < 0)
+			return (free(c->tex[id].img.ptr),
+				c->err = "Texture file not found", false);
+		close(fd);
+		count++;
 		(*i)++;
 	}
-	if (!seen[0] || !seen[1] || !seen[2] || !seen[3])
-		return (c->err = "Missing texture identifier", false);
+	if (count != 4)
+		return (c->err = "Missing texture element", false);
 	return (true);
 }

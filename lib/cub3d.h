@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 23:19:14 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:48:57 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ bool			map_validator(t_cub *cub);
 bool			check_required_elements(t_cub *c);
 bool			is_cub_file(const char *path);
 bool			parse_textures(t_cub *c, char **lines, int *i);
+bool			has_xpm_ext(char *s);
 
 char			*ft_file_to_str(char *path);
 
