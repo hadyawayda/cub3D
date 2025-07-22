@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:38:11 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 19:45:01 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 22:36:38 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ bool	load_textures(t_cub *c)
 
 bool	initialize_assets(t_cub *cub)
 {
+	cub->mouse_prev_x = -1;
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		return (false);
@@ -49,6 +50,8 @@ bool	initialize_assets(t_cub *cub)
 	cub->frame.ptr = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
 	cub->frame.addr = mlx_get_data_addr(cub->frame.ptr, &cub->frame.bpp,
 			&cub->frame.line_len, &cub->frame.endian);
+	if (!setup_mouse(cub))
+		return (false);
 	return (true);
 }
 
@@ -93,6 +96,7 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(cub.mlx, draw_frame, &cub);
 	mlx_hook(cub.win, 2, 1L << 0, on_keydown, &cub);
 	mlx_hook(cub.win, 3, 1L << 1, on_keyup, &cub);
+	mlx_hook(cub.win, 6, 1L << 6, on_mouse_move, &cub);
 	mlx_hook(cub.win, 17, 1L << 17, on_close, &cub);
 	mlx_loop(cub.mlx);
 	return (0);

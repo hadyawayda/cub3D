@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:46:26 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 16:25:04 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 22:37:57 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ static bool	store_rgb(char *s, int *col)
 }
 
 /* parse one F / C line, update flags, store rgb --------------------------- */
-bool	handle_color_line(t_cub *c, char *line, bool *floor_seen, bool *ceil_seen)
+bool	handle_color_line(t_cub *c, char *line, bool *floor_seen,
+		bool *ceil_seen)
 {
 	if (!ft_strncmp(line, "F ", 2))
 	{

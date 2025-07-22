@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 19:44:07 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/22 22:42:50 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
-# define MOVE_SPEED 0.05
-# define ROT_SPEED 0.04
+# define MOVE_SPEED 0.03
+# define ROT_SPEED 0.025
+# define MOUSE_SENS 0.001
+# define MOUSE_CX (WIDTH / 2)
+# define MOUSE_CY (HEIGHT / 2)
 
 # define KEY_W 119
 # define KEY_A 97
@@ -94,10 +97,11 @@ typedef struct s_cub
 	char		*err;
 	void		*mlx;
 	void		*win;
-	t_img		frame;
-	t_tex		tex[4];
 	int			floor_col;
 	int			ceil_col;
+	int			mouse_prev_x;
+	t_img		frame;
+	t_tex		tex[4];
 	t_player	pl;
 	t_map		map;
 	t_keys		k;
@@ -131,6 +135,7 @@ bool			has_xpm_ext(char *s);
 bool			set_player(t_cub *c, int x, int y, char ch);
 bool			handle_color_line(t_cub *c, char *line, bool *floor_seen,
 					bool *ceil_seen);
+bool			setup_mouse(t_cub *c);
 
 char			*ft_file_to_str(char *path);
 
@@ -139,6 +144,7 @@ int				on_keydown(int key, t_cub *cub);
 int				on_close(t_cub *cub);
 int				on_keydown(int key, t_cub *c);
 int				on_keyup(int key, t_cub *c);
+int				on_mouse_move(int x, int y, t_cub *c);
 
 void			cast_column(t_cub *cub, int x);
 void			free_and_exit(t_cub *cub, int status, char *msg);

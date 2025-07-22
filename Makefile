@@ -35,7 +35,7 @@ DIR						:= $(SRC_DIR)
 # SOURCE FILES   (just filenames; they get prefixed later)
 # ──────────────────────────────────────────────────────────────────────────────
 
-TOP_SRCS                := main.c
+TOP_SRCS                := main.c movements.c
 
 PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c
 
