@@ -20,6 +20,7 @@
 # define MOUSE_SENS 0.001
 # define MOUSE_CX (WIDTH / 2)
 # define MOUSE_CY (HEIGHT / 2)
+# define COLLISION_RADIUS 0.2
 
 # define KEY_W 119
 # define KEY_A 97
@@ -136,6 +137,7 @@ bool			set_player(t_cub *c, int x, int y, char ch);
 bool			handle_color_line(t_cub *c, char *line, bool *floor_seen,
 					bool *ceil_seen);
 bool			setup_mouse(t_cub *c);
+bool			hit_wall(double x, double y, t_map *map);
 
 char			*ft_file_to_str(char *path);
 

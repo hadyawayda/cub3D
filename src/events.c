@@ -27,10 +27,19 @@ void	rotate(t_player *p, double a)
 
 void	move_player(t_cub *c, t_vec step)
 {
-	if (c->map.grid[(int)c->pl.pos.y][(int)(c->pl.pos.x + step.x)] != '1')
-		c->pl.pos.x += step.x;
-	if (c->map.grid[(int)(c->pl.pos.y + step.y)][(int)c->pl.pos.x] != '1')
-		c->pl.pos.y += step.y;
+	double	new_x;
+	double	new_y;
+
+	new_x = c->pl.pos.x + step.x;
+	new_y = c->pl.pos.y + step.y;
+	if (hit_wall(new_x, c->pl.pos.y, &c->map) == false)
+	{
+		c->pl.pos.x = new_x;
+	}
+	if (hit_wall(c->pl.pos.x, new_y, &c->map) == false)
+	{
+		c->pl.pos.y = new_y;
+	}
 }
 
 int	on_keydown(int key, t_cub *c)
