@@ -73,10 +73,8 @@ static bool	setup_and_validate(t_cub *cub, char *path)
 			ft_putendl_fd(cub->err, 2);
 		}
 		else
-		{
 			ft_putendl_fd("Error!\nInvalid map file.", 2);
-		}
-		return (false);
+		return (cleanup_cub(cub), false);
 	}
 	return (true);
 }

@@ -156,5 +156,6 @@ void			fill_spaces_with_walls(char **grid, int h, int w);
 void			skip_empty_lines(char **lines, int *i);
 void			move_player(t_cub *c, t_vec step);
 void			rotate(t_player *p, double a);
+void			cleanup_cub(t_cub *cub);
 
 #endif
