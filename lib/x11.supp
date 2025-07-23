@@ -16,3 +16,19 @@
    ...
    obj:*/libXext.so.*
 }
+
+# The following suppressions are for the errors coming from minilibx
+
+{
+  x11_writev_uninit
+  Memcheck:Param
+  writev(vector[0])
+  fun:writev
+  obj:/usr/lib/*/libxcb*.so*
+}
+{
+  x11_still_reachable
+  Memcheck:Leak
+  fun:mlx_init
+  fun:XOpenDisplay
+}

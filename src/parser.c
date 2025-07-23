@@ -84,12 +84,12 @@ bool	parse_file(t_cub *cub, char *path)
 	cub->raw_lines = ft_split(file, '\n');
 	free(file);
 	if (!cub->raw_lines)
-		return (false);
+		return (cleanup_cub(cub), false);
 	i = 0;
 	if (!load_elements(cub, cub->raw_lines, &i) || !cub->raw_lines[i])
-		return (false);
+		return (cleanup_cub(cub), false);
 	if (!parse_map(cub, cub->raw_lines, i))
-		return (false);
+		return (cleanup_cub(cub), false);
 	fill_spaces_with_walls(cub->map.grid, cub->map.h, cub->map.w);
 	return (true);
 }

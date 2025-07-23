@@ -35,7 +35,7 @@ DIR						:= $(SRC_DIR)
 # SOURCE FILES   (just filenames; they get prefixed later)
 # ──────────────────────────────────────────────────────────────────────────────
 
-TOP_SRCS                := main.c
+TOP_SRCS                := main.c movements.c
 
 PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c
 
@@ -104,8 +104,9 @@ re:                     fclean all
 # ──────────────────────────────────────────────────────────────────────────────
 
 leaks:
-	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/bad/textures_duplicates.cub
-
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/bad/color_none.cub
+# 	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
+	
 qleaks:
 	@valgrind --leak-check=full -q --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
 
