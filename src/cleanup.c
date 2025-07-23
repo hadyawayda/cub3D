@@ -39,7 +39,7 @@ static void	free_parser_resources(t_cub *cub)
 	i = 0;
 	if (cub->raw_lines)
 	{
-		free_split(cub->raw_lines);
+		free_map(cub->raw_lines);
 		cub->raw_lines = NULL;
 	}
 	if (!cub->mlx)
