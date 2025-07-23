@@ -21,6 +21,7 @@
 # define MOUSE_CX (WIDTH / 2)
 # define MOUSE_CY (HEIGHT / 2)
 # define COLLISION_RADIUS 0.2
+# define MINIMAP_SCALE 12
 
 # define KEY_W 119
 # define KEY_A 97
@@ -159,5 +160,6 @@ void			skip_empty_lines(char **lines, int *i);
 void			move_player(t_cub *c, t_vec step);
 void			rotate(t_player *p, double a);
 void			cleanup_cub(t_cub *cub);
+void			draw_minimap(t_cub *c);
 
 #endif

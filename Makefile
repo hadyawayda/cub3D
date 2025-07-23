@@ -39,7 +39,7 @@ TOP_SRCS                := main.c movements.c
 
 PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c
 
-RENDERING_SRCS          := raycast_dda.c raycast_draw.c render.c events.c cleanup.c
+RENDERING_SRCS          := raycast_dda.c raycast_draw.c render.c events.c cleanup.c minimap.c
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PREFIX each group with its directory

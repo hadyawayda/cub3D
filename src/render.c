@@ -76,5 +76,6 @@ int	draw_frame(t_cub *c)
 	while (++x < WIDTH)
 		cast_column(c, x);
 	mlx_put_image_to_window(c->mlx, c->win, c->frame.ptr, 0, 0);
+	draw_minimap(c);
 	return (0);
 }
