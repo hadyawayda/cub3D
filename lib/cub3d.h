@@ -22,6 +22,8 @@
 # define MOUSE_CY (HEIGHT / 2)
 # define COLLISION_RADIUS 0.2
 # define MINIMAP_SCALE 12
+# define SPRITE_FRAMES 4
+# define SPRITE_DURATION 0.2
 
 # define KEY_W 119
 # define KEY_A 97
@@ -93,6 +95,14 @@ typedef struct s_map
 	int			h;
 }				t_map;
 
+typedef struct s_sprite
+{
+	double		x;
+	double		y;
+	int			frame;
+	double		timer;
+}				t_sprite;
+
 typedef struct s_cub
 {
 	char		**raw_lines;
@@ -102,6 +112,8 @@ typedef struct s_cub
 	int			floor_col;
 	int			ceil_col;
 	int			mouse_prev_x;
+	int			sprite_count;
+	t_sprite	*sprites;
 	t_img		frame;
 	t_tex		tex[4];
 	t_player	pl;
@@ -161,5 +173,8 @@ void			move_player(t_cub *c, t_vec step);
 void			rotate(t_player *p, double a);
 void			cleanup_cub(t_cub *cub);
 void			draw_minimap(t_cub *c);
+void			init_sprites(t_cub *c);
+void			update_sprites(t_cub *c, double dt);
+void			render_sprites(t_cub *c);
 
 #endif

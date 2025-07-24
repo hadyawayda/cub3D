@@ -89,6 +89,7 @@ int	main(int argc, char **argv)
 		return (ft_putendl_fd("Error\nInvalid file type.", 2), 1);
 	if (!setup_and_validate(&cub, argv[1]))
 		return (1);
+	init_sprites(&cub);
 	if (!initialize_assets(&cub))
 		return (1);
 	mlx_loop_hook(cub.mlx, draw_frame, &cub);

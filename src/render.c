@@ -68,14 +68,19 @@ static void	draw_ceiling_floor(t_cub *c)
 
 int	draw_frame(t_cub *c)
 {
-	int	x;
+	int		x;
+	double	dt;
 
+	dt = 0.2;
+	update_sprites(c, dt);
 	handle_inputs(c);
 	draw_ceiling_floor(c);
 	x = -1;
 	while (++x < WIDTH)
 		cast_column(c, x);
 	mlx_put_image_to_window(c->mlx, c->win, c->frame.ptr, 0, 0);
+	update_sprites(c, dt);
 	draw_minimap(c);
+	render_sprites(c);
 	return (0);
 }
