@@ -15,15 +15,21 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
-# define MOVE_SPEED 0.03
-# define ROT_SPEED 0.025
-# define MOUSE_SENS 0.001
 # define MOUSE_CX (WIDTH / 2)
 # define MOUSE_CY (HEIGHT / 2)
 # define COLLISION_RADIUS 0.2
 # define MINIMAP_SCALE 12
 # define SPRITE_FRAMES 4
 # define SPRITE_DURATION 0.2
+/* Linux parameters*/
+// # define MOVE_SPEED 0.03
+// # define ROT_SPEED 0.025
+// # define MOUSE_SENS 0.001
+/* Windows parameters*/
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.07
+# define MOUSE_SENS 0.0001
+
 
 # define KEY_W 119
 # define KEY_A 97
