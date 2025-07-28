@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 22:42:50 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/28 17:17:05 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define HEIGHT 1080
 # define MOUSE_CX (WIDTH / 2)
 # define MOUSE_CY (HEIGHT / 2)
-# define COLLISION_RADIUS 0.2
+// Unused variable collision_radius
+# define COLLISION_RADIUS 1000
 # define MINIMAP_SCALE 12
 # define SPRITE_FRAMES 4
 # define SPRITE_DURATION 0.2
