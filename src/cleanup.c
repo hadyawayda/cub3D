@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:47 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/23 11:28:58 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/28 16:27:17 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,15 @@ void	cleanup_cub(t_cub *cub)
  */
 void	free_and_exit(t_cub *cub, int status, char *msg)
 {
-	int	i;
+	t_door	*tmp;
+	int		i;
 
+	while (cub->doors)
+	{
+		tmp = cub->doors->next;
+		free(cub->doors);
+		cub->doors = tmp;
+	}
 	if (msg)
 		ft_putendl_fd(msg, 2);
 	cleanup_cub(cub);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 16:24:50 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/28 16:28:04 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ bool	load_elements(t_cub *c, char **lines, int *i)
 
 static bool	parse_map(t_cub *c, char **lines, int start)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	char	ch;
 
 	c->map.grid = &lines[start];
 	c->map.h = 0;
@@ -65,10 +66,18 @@ static bool	parse_map(t_cub *c, char **lines, int start)
 		c->map.w = ft_max(c->map.w, (int)ft_strlen(lines[start + y]));
 		x = -1;
 		while (lines[start + y][++x])
-			if (!valid_cell(lines[start + y][x]) || (ft_strchr("NSEW",
-						lines[start + y][x]) && !set_player(c, x, y, lines[start
-						+ y][x])))
+		{
+			ch = lines[start + y][x];
+			if (!valid_cell(ch))
 				return (false);
+			if (ft_strchr("NSEW", ch))
+			{
+				if (!set_player(c, x, y, ch))
+					return (false);
+			}
+			else if (ch == DOOR_CLOSED && !door_add(c, x, y))
+				return (false);
+		}
 	}
 	return (c->pl.pos.x != 0);
 }

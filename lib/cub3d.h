@@ -11,8 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-# define CUB3D_H
 
+# define CUB3D_H
+# include "../minilibx-linux/mlx.h"
+# include "libft.h"
+# include <fcntl.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+# define VALID_CHARS " 01NSEWD"
 # define WIDTH 1920
 # define HEIGHT 1080
 # define MOUSE_CX (WIDTH / 2)
@@ -21,6 +30,10 @@
 # define MINIMAP_SCALE 12
 # define SPRITE_FRAMES 4
 # define SPRITE_DURATION 0.2
+# define DOOR_CLOSED 'D'
+# define DOOR_OPEN   '0'
+# define DOOR_MM_COL  0x006600
+# define KEY_E       101
 /* Linux parameters*/
 // # define MOVE_SPEED 0.03
 // # define ROT_SPEED 0.025
@@ -30,22 +43,22 @@
 # define ROT_SPEED 0.07
 # define MOUSE_SENS 0.0001
 
+typedef struct s_door
+{
+	int				x;
+	int				y;
+	bool			open;
+	struct s_door	*next;
+}				t_door;
 
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define DOOR_CLOSED 'D'
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
-
-# include "../minilibx-linux/mlx.h"
-# include "libft.h"
-# include <fcntl.h>
-# include <math.h>
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 typedef struct s_vec
 {
@@ -120,6 +133,7 @@ typedef struct s_cub
 	int			mouse_prev_x;
 	int			sprite_count;
 	t_sprite	*sprites;
+	t_door		*doors;
 	t_img		frame;
 	t_tex		tex[4];
 	t_player	pl;
@@ -156,7 +170,8 @@ bool			set_player(t_cub *c, int x, int y, char ch);
 bool			handle_color_line(t_cub *c, char *line, bool *floor_seen,
 					bool *ceil_seen);
 bool			setup_mouse(t_cub *c);
-bool			hit_wall(double x, double y, t_map *map);
+bool			door_add(t_cub *c, int x, int y);
+bool			cell_is_blocked(t_cub *c, int x, int y);
 
 char			*ft_file_to_str(char *path);
 
@@ -182,5 +197,10 @@ void			draw_minimap(t_cub *c);
 void			init_sprites(t_cub *c);
 void			update_sprites(t_cub *c, double dt);
 void			render_sprites(t_cub *c);
+void			door_toggle(t_cub *c);
+void			draw_mm_open(t_cub *c, int gx, int gy);
+void			draw_mm_closed(t_cub *c, int gx, int gy);
+void			put_pixel(t_cub *c, int x, int y, int color);
+void			draw_square(t_cub *c, int cx, int cy, int color);
 
 #endif

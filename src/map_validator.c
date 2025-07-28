@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_validator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:25:16 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 11:55:17 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/28 17:03:54 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define VALID_CHARS " 01NSEW"
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /* return the char at (y,x) – or a space when x is outside the line          */

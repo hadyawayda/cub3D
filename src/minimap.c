@@ -15,7 +15,7 @@
 /*
  * put_pixel: draw one pixel into the frame image buffer
  */
-static void	put_pixel(t_cub *c, int x, int y, int color)
+void	put_pixel(t_cub *c, int x, int y, int color)
 {
 	char	*dst;
 	int		bpp;
@@ -32,7 +32,7 @@ static void	put_pixel(t_cub *c, int x, int y, int color)
 /*
  * draw_square: fill a MINIMAP_SCALE×MINIMAP_SCALE block at (cx,cy)
  */
-static void	draw_square(t_cub *c, int cx, int cy, int color)
+void	draw_square(t_cub *c, int cx, int cy, int color)
 {
 	int	sx;
 	int	sy;
@@ -51,6 +51,22 @@ static void	draw_square(t_cub *c, int cx, int cy, int color)
 			sx++;
 		}
 		sy++;
+	}
+}
+
+/* ─── 2.  scan the door list once and paint icons ─────────────────────── */
+static void	draw_minimap_doors(t_cub *c)
+{
+	t_door	*d;
+
+	d = c->doors;
+	while (d)
+	{
+		if (d->open)
+			draw_mm_open(c, d->x, d->y);
+		else
+			draw_mm_closed(c, d->x, d->y);
+		d = d->next;
 	}
 }
 
@@ -111,5 +127,6 @@ static void	draw_minimap_player(t_cub *c)
 void	draw_minimap(t_cub *c)
 {
 	draw_minimap_tiles(c);
+	draw_minimap_doors(c);
 	draw_minimap_player(c);
 }

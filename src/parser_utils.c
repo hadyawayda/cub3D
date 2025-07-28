@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:04 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/21 16:46:33 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/28 16:28:21 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_split_free(char **arr)
 
 bool	valid_cell(char ch)
 {
-	return (ch == '0' || ch == '1' || ch == ' '
+	return (ch == '0' || ch == '1' || ch == ' ' || ch == DOOR_CLOSED
 		|| ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W');
 }
 
