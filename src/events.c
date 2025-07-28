@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:22:30 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 22:37:31 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/28 16:43:30 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,10 @@ void	move_player(t_cub *c, t_vec step)
 
 	new_x = c->pl.pos.x + step.x;
 	new_y = c->pl.pos.y + step.y;
-	if (hit_wall(new_x, c->pl.pos.y, &c->map) == false)
-	{
+	if (!cell_is_blocked(c, new_x, c->pl.pos.y))
 		c->pl.pos.x = new_x;
-	}
-	if (hit_wall(c->pl.pos.x, new_y, &c->map) == false)
-	{
+	if (!cell_is_blocked(c, c->pl.pos.x, new_y))
 		c->pl.pos.y = new_y;
-	}
 }
 
 int	on_keydown(int key, t_cub *c)
@@ -71,6 +67,8 @@ int	on_keyup(int key, t_cub *c)
 		c->k.a = false;
 	else if (key == KEY_D)
 		c->k.d = false;
+	else if (key == KEY_E)
+		door_toggle(c);
 	else if (key == KEY_LEFT)
 		c->k.l = false;
 	else if (key == KEY_RIGHT)
