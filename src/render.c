@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:31 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 19:33:05 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 17:09:10 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,15 @@ static void	draw_ceiling_floor(t_cub *c)
 int	draw_frame(t_cub *c)
 {
 	int		x;
-	double	dt;
 
-	dt = 0.2;
-	update_sprites(c, dt);
+	sprite_tick(c);
 	handle_inputs(c);
 	draw_ceiling_floor(c);
 	x = -1;
 	while (++x < WIDTH)
 		cast_column(c, x);
 	mlx_put_image_to_window(c->mlx, c->win, c->frame.ptr, 0, 0);
-	update_sprites(c, dt);
+	draw_sprites(c);
 	draw_minimap(c);
-	render_sprites(c);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/28 16:28:04 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 17:40:10 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static bool	parse_map(t_cub *c, char **lines, int start)
 					return (false);
 			}
 			else if (ch == DOOR_CLOSED && !door_add(c, x, y))
+				return (false);
+			else if (ch == SPRITE_CHAR && !sprite_add(c, x, y))
 				return (false);
 		}
 	}

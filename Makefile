@@ -35,9 +35,9 @@ DIR						:= $(SRC_DIR)
 # SOURCE FILES   (just filenames; they get prefixed later)
 # ──────────────────────────────────────────────────────────────────────────────
 
-TOP_SRCS                := main.c movements.c
+TOP_SRCS                := main.c movements.c utils.c
 
-PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c
+PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c parse_sprite.c
 
 RENDERING_SRCS          := raycast_dda.c raycast_draw.c render.c events.c cleanup.c minimap.c sprites.c door.c
 

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 22:39:14 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/28 16:11:48 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 17:56:08 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ static bool	set_tex_path(t_cub *c, int idx, char *path, bool seen[4])
 **  On success returns true and writes the numeric id; on non‐texture line
 **  returns false; on error sets c->err and returns false as well.
 */
-static bool	parse_texture_line(t_cub *c, char *line, int *out_id)
+/* 1. handle a wall-texture line: “NO|SO|WE|EA <path>”         */
+/*    returns true on success, false otherwise.                */
+static bool  parse_wall_texture(t_cub *c, char *line, int *out_id)
 {
-	int		id;
-	char	*path;
+	int   id;
+	char *path;
 
 	if (!ft_strncmp(line, "NO ", 3))
 		id = 0;
@@ -90,6 +92,26 @@ static bool	parse_texture_line(t_cub *c, char *line, int *out_id)
 	return (true);
 }
 
+/* ──────────────────────────────────────────────────────────── */
+/* 2. decide what kind of “element” the current line is:       */
+/*      – sprite header  → parse_sprite_line()                 */
+/*      – wall texture   → parse_wall_texture()                */
+/*    On success advances *i so the outer loop continues.      */
+static bool	consume_element_line(t_cub *c, char **lines, int *i, int *out_id)
+{
+	if (parse_sprite_line(c, lines[*i]))         /* handled a “SPR …”    */
+	{
+		(*i)++;
+		return (true);
+	}
+	if (parse_wall_texture(c, lines[*i], out_id))/* handled a wall tex   */
+	{
+		(*i)++;
+		return (true);
+	}
+	return (false);                              /* line is not an elem. */
+}
+
 /*
 **  Loop through exactly four texture lines at &lines[*i].  For each one:
 **    - parse_texture_line (dup + .xpm check)
@@ -98,24 +120,28 @@ static bool	parse_texture_line(t_cub *c, char *line, int *out_id)
 */
 bool	parse_textures(t_cub *c, char **lines, int *i)
 {
-	int	id;
-	int	fd;
-	int	count;
+	int id;
+	int fd;
+	int got;
 
-	count = 0;
-	while (lines[*i] && *lines[*i])
+	got = 0;                                     /* # wall textures read */
+	while (lines[*i] && lines[*i][0] != '\0')
 	{
-		if (!parse_texture_line(c, lines[*i], &id))
-			break ;
-		fd = open(c->tex[id].img.ptr, O_RDONLY);
-		if (fd < 0)
-			return (free(c->tex[id].img.ptr),
-				c->err = "Texture file not found", false);
-		close(fd);
-		count++;
-		(*i)++;
+		if (!consume_element_line(c, lines, i, &id))
+			break ;                              /* not an element line  */
+
+		/* Only wall textures contribute to the required four ---------- */
+		if (id >= 0 && id <= 3)
+		{
+			fd = open(c->tex[id].img.ptr, O_RDONLY);
+			if (fd < 0)
+				return (c->err = "Texture file not found", false);
+			close(fd);
+			got++;
+		}
 	}
-	if (count != 4)
+	if (got != 4)
 		return (c->err = "Missing texture element", false);
 	return (true);
 }
+

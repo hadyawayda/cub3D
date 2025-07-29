@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:12:51 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/16 20:12:51 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 18:07:09 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int					ft_lstsize(t_list *lst);
 int					ft_isspace(int c);
 int					ft_isdelimiter(char c);
 int					ft_max(int a, int b);
+int					ft_min(int a, int b);
 
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strchr(const char *s, int c);

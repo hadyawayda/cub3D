@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:38:11 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 22:36:38 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 10:20:35 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ bool	initialize_assets(t_cub *cub)
 	if (!cub->mlx)
 		return (false);
 	if (!load_textures(cub))
+		return (false);
+	if (!load_sprite_frames(cub))
 		return (false);
 	cub->win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
 	cub->frame.ptr = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
@@ -89,7 +91,6 @@ int	main(int argc, char **argv)
 		return (ft_putendl_fd("Error\nInvalid file type.", 2), 1);
 	if (!setup_and_validate(&cub, argv[1]))
 		return (1);
-	init_sprites(&cub);
 	if (!initialize_assets(&cub))
 		return (1);
 	mlx_loop_hook(cub.mlx, draw_frame, &cub);
