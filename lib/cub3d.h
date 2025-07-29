@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nhaber <nhaber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 22:42:50 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 17:12:14 by nhaber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@
 # define DOOR_MM_COL  0x006600
 # define KEY_E       101
 /* Linux parameters*/
-// # define MOVE_SPEED 0.03
-// # define ROT_SPEED 0.025
-// # define MOUSE_SENS 0.001
-/* Windows parameters*/
-# define MOVE_SPEED 0.1
-# define ROT_SPEED 0.07
+# define MOVE_SPEED 0.03
+# define ROT_SPEED 0.025
 # define MOUSE_SENS 0.0001
+/* Windows parameters*/
+// # define MOVE_SPEED 0.1
+// # define ROT_SPEED 0.07
+// # define MOUSE_SENS 0.0001
 
 typedef struct s_door
 {
