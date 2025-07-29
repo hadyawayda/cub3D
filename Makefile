@@ -17,6 +17,7 @@ AR                      := @ar rcs
 RM                      := @rm -rf
 CFLAGS                  := -g -O0 -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
 OBJDIR                  := objs
+.DEFAULT_GOAL			:= build
 
 # ──────────────────────────────────────────────────────────────────────────────
 # LIBRARIES (libft, MiniLibX)
@@ -62,13 +63,15 @@ OBJS                    := $(patsubst %.c,$(OBJDIR)/%.o,$(SRCS))
 # DEFAULT TARGET
 # ──────────────────────────────────────────────────────────────────────────────
 
-all:                    $(NAME)
+build:					$(NAME)
+
+all:                    $(MLX_LIB) build
 
 # ──────────────────────────────────────────────────────────────────────────────
 # LINKING
 # ──────────────────────────────────────────────────────────────────────────────
 
-$(NAME):                $(OBJS) $(LIBFT) $(MLX_LIB)
+$(NAME):                $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $@
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -97,13 +100,12 @@ clean:
 	@rm -f $(OBJS)
 	@rm -rf $(OBJDIR)
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
-	@$(MAKE) --no-print-directory -C $(MLX_DIR) clean
 
 fclean:                 clean
 	@rm -f $(NAME)
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 
-re:                     fclean all
+re:                     fclean build
 
 # ──────────────────────────────────────────────────────────────────────────────
 # OPTIONAL VALGRIND / NORM TARGETS

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:31 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/29 17:09:10 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 02:12:08 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	draw_ceiling_floor(t_cub *c)
 
 int	draw_frame(t_cub *c)
 {
-	int		x;
+	int	x;
 
 	sprite_tick(c);
 	handle_inputs(c);
@@ -76,8 +76,8 @@ int	draw_frame(t_cub *c)
 	x = -1;
 	while (++x < WIDTH)
 		cast_column(c, x);
-	mlx_put_image_to_window(c->mlx, c->win, c->frame.ptr, 0, 0);
 	draw_sprites(c);
 	draw_minimap(c);
+	mlx_put_image_to_window(c->mlx, c->win, c->frame.ptr, 0, 0);
 	return (0);
 }

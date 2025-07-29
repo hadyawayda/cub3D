@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 22:39:14 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/29 17:56:08 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 00:51:19 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ static bool	set_tex_path(t_cub *c, int idx, char *path, bool seen[4])
 */
 /* 1. handle a wall-texture line: “NO|SO|WE|EA <path>”         */
 /*    returns true on success, false otherwise.                */
-static bool  parse_wall_texture(t_cub *c, char *line, int *out_id)
+bool	parse_wall_texture(t_cub *c, char *line, int *out_id)
 {
-	int   id;
-	char *path;
+	int		id;
+	char	*path;
 
 	if (!ft_strncmp(line, "NO ", 3))
 		id = 0;
@@ -99,49 +99,15 @@ static bool  parse_wall_texture(t_cub *c, char *line, int *out_id)
 /*    On success advances *i so the outer loop continues.      */
 static bool	consume_element_line(t_cub *c, char **lines, int *i, int *out_id)
 {
-	if (parse_sprite_line(c, lines[*i]))         /* handled a “SPR …”    */
+	if (parse_sprite_line(c, lines[*i]))
 	{
 		(*i)++;
 		return (true);
 	}
-	if (parse_wall_texture(c, lines[*i], out_id))/* handled a wall tex   */
+	if (parse_wall_texture(c, lines[*i], out_id))
 	{
 		(*i)++;
 		return (true);
 	}
-	return (false);                              /* line is not an elem. */
+	return (false);
 }
-
-/*
-**  Loop through exactly four texture lines at &lines[*i].  For each one:
-**    - parse_texture_line (dup + .xpm check)
-**    - then open()/close() that path to verify it exists
-**  On any failure we free the dup’d path, set c->err and return false.
-*/
-bool	parse_textures(t_cub *c, char **lines, int *i)
-{
-	int id;
-	int fd;
-	int got;
-
-	got = 0;                                     /* # wall textures read */
-	while (lines[*i] && lines[*i][0] != '\0')
-	{
-		if (!consume_element_line(c, lines, i, &id))
-			break ;                              /* not an element line  */
-
-		/* Only wall textures contribute to the required four ---------- */
-		if (id >= 0 && id <= 3)
-		{
-			fd = open(c->tex[id].img.ptr, O_RDONLY);
-			if (fd < 0)
-				return (c->err = "Texture file not found", false);
-			close(fd);
-			got++;
-		}
-	}
-	if (got != 4)
-		return (c->err = "Missing texture element", false);
-	return (true);
-}
-

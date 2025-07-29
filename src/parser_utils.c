@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:04 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/29 16:36:17 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 22:55:52 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static char	*read_fd_to_str(int fd)
 {
-	char		buf[1024];
-	int			r;
-	char		*out;
-	char		*tmp;
+	char	buf[1024];
+	int		r;
+	char	*out;
+	char	*tmp;
 
 	out = ft_strdup("");
 	while (1)
@@ -63,7 +63,8 @@ void	ft_split_free(char **arr)
 bool	valid_cell(char ch)
 {
 	return (ch == '0' || ch == '1' || ch == ' ' || ch == DOOR_CLOSED
-		|| ch == SPRITE_CHAR || ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W');
+		|| ch == SPRITE_CHAR || ch == 'N' || ch == 'S' || ch == 'E'
+		|| ch == 'W');
 }
 
 /*
@@ -71,9 +72,8 @@ bool	valid_cell(char ch)
 */
 bool	check_required_elements(t_cub *c)
 {
-	if (!c->tex[0].img.ptr || !c->tex[1].img.ptr
-		|| !c->tex[2].img.ptr || !c->tex[3].img.ptr
-		|| c->floor_col == -1 || c->ceil_col == -1)
+	if (!c->tex[0].img.ptr || !c->tex[1].img.ptr || !c->tex[2].img.ptr
+		|| !c->tex[3].img.ptr || c->floor_col == -1 || c->ceil_col == -1)
 		return (c->err = "Missing element", false);
 	return (true);
 }

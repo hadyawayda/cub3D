@@ -42,15 +42,15 @@ all	: $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME)	: $(OBJ)
-	ar -r $(NAME) $(OBJ)
-	ranlib $(NAME)
-	cp $(NAME) $(NAME_UNAME)
+	@ar -r $(NAME) $(OBJ) > /dev/null 2>&1
+	@ranlib $(NAME) > /dev/null 2>&1
+	@cp $(NAME) $(NAME_UNAME) > /dev/null 2>&1
 
 check: all
-	@test/run_tests.sh
+	@test/run_tests.sh > /dev/null 2>&1
 
 show:
 	@printf "NAME  		: $(NAME)\n"
@@ -61,6 +61,6 @@ show:
 	@printf "OBJ		:\n	$(OBJ)\n"
 
 clean	:
-	rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
+	@rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
 
 .PHONY: all check show clean

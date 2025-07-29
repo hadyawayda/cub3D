@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/29 17:40:10 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 01:48:04 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,32 @@ bool	parse_colors(t_cub *c, char **lines, int *i)
 */
 bool	load_elements(t_cub *c, char **lines, int *i)
 {
+	bool	floor_seen;
+	bool	ceil_seen;
+	int		id;
+
+	floor_seen = false;
+	ceil_seen = false;
 	skip_empty_lines(lines, i);
-	if (!parse_textures(c, lines, i))
+	while (lines[*i] && lines[*i][0] != '\0')
+	{
+		if (parse_sprite_line(c, lines[*i]))
+			(*i)++;
+		else if (parse_wall_texture(c, lines[*i], &id))
+			(*i)++;
+		else if (handle_color_line(c, lines[*i], &floor_seen, &ceil_seen))
+			(*i)++;
+		else if (valid_cell(lines[*i][0]))
+			break ;
+		else
+			return (c->err = "Unknown element line", false);
+		skip_empty_lines(lines, i);
+	}
+	if (!check_required_elements(c))
 		return (false);
-	skip_empty_lines(lines, i);
-	if (!parse_colors(c, lines, i))
-		return (false);
-	skip_empty_lines(lines, i);
-	return (check_required_elements(c));
+	if (!floor_seen || !ceil_seen)
+		return (c->err = "Missing floor or ceiling color", false);
+	return (true);
 }
 
 static bool	parse_map(t_cub *c, char **lines, int start)
