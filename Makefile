@@ -6,6 +6,7 @@ SRC_DIR                 := src
 LIBFT_DIR               := lib/libft
 MLX_DIR                 := assets/minilibx-linux
 SUPPRESS_X11			:= lib/x11.supp
+
 # ──────────────────────────────────────────────────────────────────────────────
 # PROJECT SETTINGS
 # ──────────────────────────────────────────────────────────────────────────────
@@ -22,6 +23,7 @@ OBJDIR                  := objs
 # ──────────────────────────────────────────────────────────────────────────────
 
 LIBFT                   := $(LIBFT_DIR)/libft.a
+MLX_LIB                 := $(MLX_DIR)/libmlx.a
 
 MLX_FLAGS               := -L $(MLX_DIR) -lmlx -lX11 -lXext -lXrender -lm
 
@@ -66,15 +68,18 @@ all:                    $(NAME)
 # LINKING
 # ──────────────────────────────────────────────────────────────────────────────
 
-$(NAME):                $(OBJS) $(LIBFT)
+$(NAME):                $(OBJS) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $@
 
 # ──────────────────────────────────────────────────────────────────────────────
-# build libft automatically if missing
+# build libft and mlx automatically if missing
 # ──────────────────────────────────────────────────────────────────────────────
 
 $(LIBFT):
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
+
+$(MLX_LIB):
+	@$(MAKE) --no-print-directory -C $(MLX_DIR)
 
 # ──────────────────────────────────────────────────────────────────────────────
 # PATTERN RULE  (.c → .o)
@@ -92,6 +97,7 @@ clean:
 	@rm -f $(OBJS)
 	@rm -rf $(OBJDIR)
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
+	@$(MAKE) --no-print-directory -C $(MLX_DIR) clean
 
 fclean:                 clean
 	@rm -f $(NAME)
@@ -105,8 +111,7 @@ re:                     fclean all
 
 leaks:
 	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/bad/color_none.cub
-# 	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
-	
+
 qleaks:
 	@valgrind --leak-check=full -q --suppressions=$(SUPPRESS_X11) ./$(NAME) assets/maps/good/cheese_maze.cub
 

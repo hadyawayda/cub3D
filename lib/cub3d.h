@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/28 17:17:05 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/29 22:38:14 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,36 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+
+# define VALID_CHARS " 01NSEWD"
+# define WIDTH 1920
+# define HEIGHT 1080
+# define MOUSE_CX (WIDTH / 2)
+# define MOUSE_CY (HEIGHT / 2)
+# define COLLISION_RADIUS 0.2
+# define MINIMAP_SCALE 12
+# define SPRITE_FRAMES 4
+# define SPRITE_DURATION 0.2
+# define DOOR_CLOSED 'D'
+# define DOOR_OPEN   '0'
+# define DOOR_MM_COL  0x006600
+# define KEY_E       101
+/* Linux parameters*/
+# define MOVE_SPEED 0.03
+# define ROT_SPEED 0.025
+# define MOUSE_SENS 0.0001
+/* Windows parameters*/
+// # define MOVE_SPEED 0.1
+// # define ROT_SPEED 0.07
+// # define MOUSE_SENS 0.0001
+
+typedef struct s_door
+{
+	int				x;
+	int				y;
+	bool			open;
+	struct s_door	*next;
+}				t_door;
 
 # define KEY_W 119
 # define KEY_A 97
