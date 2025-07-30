@@ -50,8 +50,12 @@ bool	load_elements(t_cub *c, char **lines, int *i)
 	skip_empty_lines(lines, i);
 	if (!parse_elements_loop(&ctx))
 		return (false);
+	if (lines[*i] && valid_cell(lines[*i][0])
+		&& (!c->tex[0].img.ptr || !c->tex[1].img.ptr
+		|| !c->tex[2].img.ptr || !c->tex[3].img.ptr))
+		return (c->err = "Texture lines must appear above the map", false);
 	if (!check_required_elements(c))
-		return (false);
+		return (c->err = "Missing element", false);
 	if (!floor_seen || !ceil_seen)
 		return (c->err = "Missing floor or ceiling color", false);
 	return (true);
