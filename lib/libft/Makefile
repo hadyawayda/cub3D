@@ -12,6 +12,7 @@ SRC_FILES =	ft_atoi.c \
 			ft_isalpha.c \
 			ft_isascii.c \
 			ft_isdelimiter.c \
+			ft_isdigit_str.c \
 			ft_isdigit.c \
 			ft_isprint.c \
 			ft_isspace.c \

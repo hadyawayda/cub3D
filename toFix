@@ -1,5 +1,5 @@
-C 217,117ygyt,119 should not take letters (it should give an error)
-C 217,117,,,,,,,,,,,,,,,,,,,,,,,,119 should not take all the commas only one
+// C 217,117ygyt,119 should not take letters (it should give an error)
+// C 217,117,,,,,,,,,,,,,,,,,,,,,,,,119 should not take all the commas only one
 
 textures sould be above the map (fix error message)
 

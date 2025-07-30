@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helpers2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:46:26 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 22:37:57 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 12:36:52 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,12 @@ static bool	store_rgb(char *s, int *col)
 	int		b;
 
 	sp = ft_split(s, ',');
-	if (!sp || !sp[0] || !sp[1] || !sp[2] || sp[3])
+	if (!sp || !sp[0] || !sp[1] || !sp[2]
+		|| sp[3])
+		return (free_map(sp), false);
+	if (!ft_isdigit_str(sp[0])
+		|| !ft_isdigit_str(sp[1])
+		|| !ft_isdigit_str(sp[2]))
 		return (free_map(sp), false);
 	r = ft_atoi(sp[0]);
 	g = ft_atoi(sp[1]);
