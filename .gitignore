@@ -61,7 +61,7 @@ tester/
 unit-tester/
 
 # Testing Scripts
-# *.sh
+*.sh
 
 # Config Files
 *.ini

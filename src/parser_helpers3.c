@@ -38,22 +38,25 @@ bool	process_map_row(t_cub *c, char *row, int y)
 }
 
 /*
-**  Parse F and C exactly once each.  Advances *i past them.
+**  Return true if 's' ends in ".xpm"
 */
-bool	parse_colors(t_cub *c, char **lines, int *i)
+bool	has_xpm_ext(char *s)
 {
-	bool	floor_seen;
-	bool	ceil_seen;
+	size_t	len;
 
-	floor_seen = false;
-	ceil_seen = false;
-	while (lines[*i] && lines[*i][0] != '\0')
-	{
-		if (!handle_color_line(c, lines[*i], &floor_seen, &ceil_seen))
-			break ;
+	if (!s)
+		return (false);
+	len = ft_strlen(s);
+	if (len < 5)
+		return (false);
+	return (ft_strcmp(s + len - 4, ".xpm") == 0);
+}
+
+/*
+**  Skip over any empty lines (elements can be separated by blank lines).
+*/
+void	skip_empty_lines(char **lines, int *i)
+{
+	while (lines[*i] && lines[*i][0] == '\0')
 		(*i)++;
-	}
-	if (!floor_seen || !ceil_seen)
-		return (c->err = "Missing floor or ceiling color", false);
-	return (true);
 }

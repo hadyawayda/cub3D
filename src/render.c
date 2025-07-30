@@ -6,27 +6,11 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:31 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 02:12:08 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 14:02:41 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	apply_movement(t_cub *c)
-{
-	t_vec	delta;
-
-	delta = (t_vec){0, 0};
-	if (c->k.w)
-		delta = (t_vec){c->pl.dir.x * MOVE_SPEED, c->pl.dir.y * MOVE_SPEED};
-	if (c->k.s)
-		delta = (t_vec){-c->pl.dir.x * MOVE_SPEED, -c->pl.dir.y * MOVE_SPEED};
-	if (c->k.a)
-		delta = (t_vec){c->pl.dir.y * MOVE_SPEED, -c->pl.dir.x * MOVE_SPEED};
-	if (c->k.d)
-		delta = (t_vec){-c->pl.dir.y * MOVE_SPEED, c->pl.dir.x * MOVE_SPEED};
-	move_player(c, delta);
-}
 
 static void	apply_rotation(t_cub *c)
 {

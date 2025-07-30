@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helpers2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:46:26 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/22 22:37:57 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 21:16:12 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-**  Return true if 's' ends in ".xpm"
-*/
-bool	has_xpm_ext(char *s)
-{
-	size_t	len;
-
-	if (!s)
-		return (false);
-	len = ft_strlen(s);
-	if (len < 5)
-		return (false);
-	return (ft_strcmp(s + len - 4, ".xpm") == 0);
-}
-
-/*
-**  Skip over any empty lines (elements can be separated by blank lines).
-*/
-void	skip_empty_lines(char **lines, int *i)
-{
-	while (lines[*i] && lines[*i][0] == '\0')
-		(*i)++;
-}
 
 bool	set_player(t_cub *c, int x, int y, char ch)
 {
@@ -53,15 +29,38 @@ bool	set_player(t_cub *c, int x, int y, char ch)
 	return (true);
 }
 
-static bool	store_rgb(char *s, int *col)
+static int	count_char(const char *s, char c)
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (s && s[i])
+	{
+		if (s[i] == c)
+			n++;
+		i++;
+	}
+	return (n);
+}
+
+/* accept only  "R,G,B"  with 2 commas and digits‐only components */
+static bool	store_rgb(t_cub *c, char *s, int *col)
 {
 	char	**sp;
 	int		r;
 	int		g;
 	int		b;
 
+	if (count_char(s, ',') != 2)
+		return (c->err = "Bad color format.", false);
 	sp = ft_split(s, ',');
 	if (!sp || !sp[0] || !sp[1] || !sp[2] || sp[3])
+		return (free_map(sp), false);
+	if (!ft_isdigit_str(sp[0])
+		|| !ft_isdigit_str(sp[1])
+		|| !ft_isdigit_str(sp[2]))
 		return (free_map(sp), false);
 	r = ft_atoi(sp[0]);
 	g = ft_atoi(sp[1]);
@@ -79,16 +78,16 @@ bool	handle_color_line(t_cub *c, char *line, bool *floor_seen,
 	if (!ft_strncmp(line, "F ", 2))
 	{
 		if (*floor_seen)
-			return (c->err = "Duplicate floor color", false);
-		if (!store_rgb(line + 2, &c->floor_col))
+			return (c->err = "Duplicate floor color.", false);
+		if (!store_rgb(c, line + 2, &c->floor_col))
 			return (false);
 		*floor_seen = true;
 	}
 	else if (!ft_strncmp(line, "C ", 2))
 	{
 		if (*ceil_seen)
-			return (c->err = "Duplicate ceiling color", false);
-		if (!store_rgb(line + 2, &c->ceil_col))
+			return (c->err = "Duplicate ceiling color.", false);
+		if (!store_rgb(c, line + 2, &c->ceil_col))
 			return (false);
 		*ceil_seen = true;
 	}

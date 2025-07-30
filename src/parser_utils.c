@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:04 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/29 22:55:52 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 21:16:19 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ bool	check_required_elements(t_cub *c)
 {
 	if (!c->tex[0].img.ptr || !c->tex[1].img.ptr || !c->tex[2].img.ptr
 		|| !c->tex[3].img.ptr || c->floor_col == -1 || c->ceil_col == -1)
-		return (c->err = "Missing element", false);
+		return (c->err = "Missing element.", false);
 	return (true);
 }

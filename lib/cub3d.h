@@ -196,7 +196,6 @@ bool				sprite_add(t_cub *c, int x, int y);
 bool				load_sprite_frames(t_cub *c);
 bool				parse_wall_texture(t_cub *c, char *line, int *out_id);
 bool				process_map_row(t_cub *c, char *row, int y);
-bool				parse_colors(t_cub *c, char **lines, int *i);
 bool				sprite_transform(t_cub *c, t_sprite *s, double *tx,
 						double *ty);
 bool				hits_wall(t_cub *c, double x, double y);
@@ -234,5 +233,6 @@ void				draw_sprites(t_cub *c);
 void				compute_draw_limits(t_dda *d);
 void				compute_texture_mapping(t_cub *c, t_dda *d);
 void				draw_one_sprite(t_cub *c, t_sprite *s);
+void				apply_movement(t_cub *c);
 
 #endif

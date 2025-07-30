@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:40:54 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 10:52:08 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 21:14:48 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ static bool	parse_elements_loop(t_elem_ctx *x)
 			(*x->i)++;
 		else if (parse_wall_texture(x->c, x->lines[*x->i], &id))
 			(*x->i)++;
+		else if (x->c->err)
+			return (false);
 		else if (handle_color_line(x->c, x->lines[*x->i],
 				x->floor_seen, x->ceil_seen))
 			(*x->i)++;
+		else if (x->c->err)
+			return (false);
 		else if (valid_cell(x->lines[*x->i][0]))
 			break ;
 		else
-			return (x->c->err = "Unknown element line", false);
+			return (x->c->err = "Unknown element line.", false);
 		skip_empty_lines(x->lines, x->i);
 	}
 	return (true);
@@ -50,10 +54,14 @@ bool	load_elements(t_cub *c, char **lines, int *i)
 	skip_empty_lines(lines, i);
 	if (!parse_elements_loop(&ctx))
 		return (false);
+	if (lines[*i] && valid_cell(lines[*i][0])
+		&& (!c->tex[0].img.ptr || !c->tex[1].img.ptr
+		|| !c->tex[2].img.ptr || !c->tex[3].img.ptr))
+		return (c->err = "Texture lines must appear above the map.", false);
 	if (!check_required_elements(c))
-		return (false);
+		return (c->err = "Missing element.", false);
 	if (!floor_seen || !ceil_seen)
-		return (c->err = "Missing floor or ceiling color", false);
+		return (c->err = "Missing floor or ceiling color.", false);
 	return (true);
 }
 
