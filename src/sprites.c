@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:25:19 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 11:13:20 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 21:16:43 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	load_sprite_frames(t_cub *c)
 	if (c->spr.count <= 0)
 		return (true);
 	if (c->spr.count > MAX_SPR_FR)
-		return (c->err = "Too many sprite frames", false);
+		return (c->err = "Too many sprite frames.", false);
 	i = 0;
 	while (i < c->spr.count)
 	{

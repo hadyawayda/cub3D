@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:46:26 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 12:36:52 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 21:16:12 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static bool	store_rgb(t_cub *c, char *s, int *col)
 	int		b;
 
 	if (count_char(s, ',') != 2)
-		return (c->err = "Bad color format", false);
+		return (c->err = "Bad color format.", false);
 	sp = ft_split(s, ',');
 	if (!sp || !sp[0] || !sp[1] || !sp[2] || sp[3])
 		return (free_map(sp), false);
@@ -78,7 +78,7 @@ bool	handle_color_line(t_cub *c, char *line, bool *floor_seen,
 	if (!ft_strncmp(line, "F ", 2))
 	{
 		if (*floor_seen)
-			return (c->err = "Duplicate floor color", false);
+			return (c->err = "Duplicate floor color.", false);
 		if (!store_rgb(c, line + 2, &c->floor_col))
 			return (false);
 		*floor_seen = true;
@@ -86,7 +86,7 @@ bool	handle_color_line(t_cub *c, char *line, bool *floor_seen,
 	else if (!ft_strncmp(line, "C ", 2))
 	{
 		if (*ceil_seen)
-			return (c->err = "Duplicate ceiling color", false);
+			return (c->err = "Duplicate ceiling color.", false);
 		if (!store_rgb(c, line + 2, &c->ceil_col))
 			return (false);
 		*ceil_seen = true;
