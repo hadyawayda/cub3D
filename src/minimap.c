@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hawayda <hawayda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:57:53 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/23 16:57:53 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 10:34:27 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
- * put_pixel: draw one pixel into the frame image buffer
- */
-void	put_pixel(t_cub *c, int x, int y, int color)
-{
-	char	*dst;
-	int		bpp;
-	int		line_len;
-	int		endian;
-
-	bpp = c->frame.bpp;
-	line_len = c->frame.line_len;
-	endian = c->frame.endian;
-	dst = c->frame.addr + (y * line_len + x * (bpp / 8));
-	*(unsigned int *)dst = color;
-}
 
 /*
  * draw_square: fill a MINIMAP_SCALE×MINIMAP_SCALE block at (cx,cy)

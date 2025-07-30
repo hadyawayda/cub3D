@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:02:33 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 02:26:13 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 11:18:19 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@
 # define SPRITE_CHAR 'T'
 # define WIDTH 1920
 # define HEIGHT 1080
-# define MOUSE_CX (WIDTH / 2)
-# define MOUSE_CY (HEIGHT / 2)
 // Unused variable collision_radius
 # define COLLISION_RADIUS 1000
 # define MINIMAP_SCALE 12
@@ -146,6 +144,25 @@ typedef struct s_cub
 	double			zbuf[WIDTH];
 }					t_cub;
 
+typedef struct s_elem_ctx
+{
+	t_cub	*c;
+	char	**lines;
+	int		*i;
+	bool	*floor_seen;
+	bool	*ceil_seen;
+}	t_elem_ctx;
+
+typedef struct s_sprite_segment
+{
+	t_img	*tex;
+	int		size;
+	int		y0;
+	int		y1;
+	int		scr_x;
+	double	ty;
+}				t_sprite_segment;
+
 typedef struct s_dda
 {
 	t_vec			ray;
@@ -180,6 +197,10 @@ bool				parse_sprite_line(t_cub *c, char *line);
 bool				sprite_add(t_cub *c, int x, int y);
 bool				load_sprite_frames(t_cub *c);
 bool				parse_wall_texture(t_cub *c, char *line, int *out_id);
+bool				process_map_row(t_cub *c, char *row, int y);
+bool				parse_colors(t_cub *c, char **lines, int *i);
+bool				sprite_transform(t_cub *c, t_sprite *s, double *tx,
+						double *ty);
 
 char				*ft_file_to_str(char *path);
 
@@ -210,5 +231,8 @@ void				put_pixel(t_cub *c, int x, int y, int color);
 void				draw_square(t_cub *c, int cx, int cy, int color);
 void				sprite_tick(t_cub *c);
 void				draw_sprites(t_cub *c);
+void				compute_draw_limits(t_dda *d);
+void				compute_texture_mapping(t_cub *c, t_dda *d);
+void				draw_one_sprite(t_cub *c, t_sprite *s);
 
 #endif
