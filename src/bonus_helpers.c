@@ -20,11 +20,9 @@ void	put_pixel(t_cub *c, int x, int y, int color)
 	char	*dst;
 	int		bpp;
 	int		line_len;
-	int		endian;
 
 	bpp = c->frame.bpp;
 	line_len = c->frame.line_len;
-	endian = c->frame.endian;
 	dst = c->frame.addr + (y * line_len + x * (bpp / 8));
 	*(unsigned int *)dst = color;
 }

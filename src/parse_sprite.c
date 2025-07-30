@@ -6,23 +6,11 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 15:32:43 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 01:38:50 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 12:03:31 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static bool	load_frame(t_cub *c, int idx, char *path)
-{
-	t_img	*im;
-
-	im = &c->spr.frame[idx];
-	im->ptr = mlx_xpm_file_to_image(c->mlx, path, &im->w, &im->h);
-	if (!im->ptr)
-		return (c->err = "Sprite frame xpm fail", false);
-	im->addr = mlx_get_data_addr(im->ptr, &im->bpp, &im->line_len, &im->endian);
-	return (true);
-}
 
 /* ───────────────────── parse “SPR <n> <p0> <p1> …” line ───────────────── */
 bool	parse_sprite_line(t_cub *c, char *line)

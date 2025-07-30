@@ -12,19 +12,6 @@
 
 #include "cub3d.h"
 
-/* ───────────────────────── helper: load one XPM frame ──────────────────── */
-static bool	load_frame(t_cub *c, int idx, char *path)
-{
-	t_img	*im;
-
-	im = &c->spr.frame[idx];
-	im->ptr = mlx_xpm_file_to_image(c->mlx, path, &im->w, &im->h);
-	if (!im->ptr)
-		return (c->err = "Sprite xpm load failed", false);
-	im->addr = mlx_get_data_addr(im->ptr, &im->bpp, &im->line_len, &im->endian);
-	return (true);
-}
-
 /* ───────────────────────────── add one instance ───────────────────────── */
 bool	sprite_add(t_cub *c, int x, int y)
 {

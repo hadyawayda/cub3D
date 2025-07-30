@@ -36,8 +36,7 @@
 # define SPRITE_CHAR 'T'
 # define WIDTH 1920
 # define HEIGHT 1080
-// Unused variable collision_radius
-# define COLLISION_RADIUS 1000
+# define COLLISION_RADIUS 0.2
 # define MINIMAP_SCALE 12
 # define SPRITE_FRAMES 4
 # define SPRITE_DURATION 0.2
@@ -192,7 +191,6 @@ bool				handle_color_line(t_cub *c, char *line, bool *floor_seen,
 						bool *ceil_seen);
 bool				setup_mouse(t_cub *c);
 bool				door_add(t_cub *c, int x, int y);
-bool				cell_is_blocked(t_cub *c, int x, int y);
 bool				parse_sprite_line(t_cub *c, char *line);
 bool				sprite_add(t_cub *c, int x, int y);
 bool				load_sprite_frames(t_cub *c);
@@ -201,6 +199,8 @@ bool				process_map_row(t_cub *c, char *row, int y);
 bool				parse_colors(t_cub *c, char **lines, int *i);
 bool				sprite_transform(t_cub *c, t_sprite *s, double *tx,
 						double *ty);
+bool				hits_wall(t_cub *c, double x, double y);
+bool				cell_is_wall(t_cub *c, int gx, int gy);
 
 char				*ft_file_to_str(char *path);
 

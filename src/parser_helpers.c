@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 22:39:14 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/30 00:51:19 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 12:03:05 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ bool	is_cub_file(const char *path)
 	return (ft_strncmp(path + len - 4, ".cub", 4) == 0);
 }
 
-static bool	set_tex_path(t_cub *c, int idx, char *path, bool seen[4])
-{
-	if (seen[idx])
-		return (c->err = "Duplicate texture identifier", false);
-	c->tex[idx].img.ptr = ft_strdup(path);
-	if (!c->tex[idx].img.ptr)
-		return (c->err = "Allocation failure", false);
-	seen[idx] = true;
-	return (true);
-}
-
 /*
 **  Try to parse one texture line.  If 'line' begins with NO/SO/WE/EA + space,
 **  dup the path, validate .xpm extension and duplicates, store into c->tex[id].
@@ -90,24 +79,4 @@ bool	parse_wall_texture(t_cub *c, char *line, int *out_id)
 	c->tex[id].img.ptr = path;
 	*out_id = id;
 	return (true);
-}
-
-/* ──────────────────────────────────────────────────────────── */
-/* 2. decide what kind of “element” the current line is:       */
-/*      – sprite header  → parse_sprite_line()                 */
-/*      – wall texture   → parse_wall_texture()                */
-/*    On success advances *i so the outer loop continues.      */
-static bool	consume_element_line(t_cub *c, char **lines, int *i, int *out_id)
-{
-	if (parse_sprite_line(c, lines[*i]))
-	{
-		(*i)++;
-		return (true);
-	}
-	if (parse_wall_texture(c, lines[*i], out_id))
-	{
-		(*i)++;
-		return (true);
-	}
-	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:41:47 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/29 17:58:07 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 12:03:48 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	free_and_exit(t_cub *cub, int status, char *msg)
 {
 	t_door		*tmp;
 	t_sprite	*tmp2;
-	int			i;
 
 	while (cub->doors)
 	{

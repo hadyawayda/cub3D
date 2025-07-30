@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:22:30 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/28 16:43:30 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 12:01:02 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	rotate(t_player *p, double a)
 
 void	move_player(t_cub *c, t_vec step)
 {
-	double	new_x;
-	double	new_y;
+	double	nx;
+	double	ny;
 
-	new_x = c->pl.pos.x + step.x;
-	new_y = c->pl.pos.y + step.y;
-	if (!cell_is_blocked(c, new_x, c->pl.pos.y))
-		c->pl.pos.x = new_x;
-	if (!cell_is_blocked(c, c->pl.pos.x, new_y))
-		c->pl.pos.y = new_y;
+	nx = c->pl.pos.x + step.x;
+	ny = c->pl.pos.y + step.y;
+	if (!hits_wall(c, nx, c->pl.pos.y))
+		c->pl.pos.x = nx;
+	if (!hits_wall(c, c->pl.pos.x, ny))
+		c->pl.pos.y = ny;
 }
 
 int	on_keydown(int key, t_cub *c)

@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:40:24 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/28 16:45:04 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 11:58:26 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	run_dda(t_cub *c, t_dda *d)
 			d->map_y += d->step.y;
 			d->side_hit = 1;
 		}
-		if (cell_is_blocked(c, d->map_x, d->map_y))
+		if (cell_is_wall(c, d->map_x, d->map_y))
 			break ;
 	}
 	if (d->side_hit == 0)

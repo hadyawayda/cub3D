@@ -36,15 +36,3 @@ int	on_mouse_move(int x, int y, t_cub *c)
 	mlx_mouse_move(c->mlx, c->win, mouse_cx, mouse_cy);
 	return (0);
 }
-
-/*
- * is_wall_at: returns true if map cell (mx, my) is a wall or out of bounds.
- */
-static bool	is_wall_at(int mx, int my, t_map *map)
-{
-	if (my < 0 || my >= map->h
-		|| mx < 0 || mx >= map->w
-		|| map->grid[my][mx] == '1')
-		return (true);
-	return (false);
-}

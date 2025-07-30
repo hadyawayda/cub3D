@@ -6,7 +6,7 @@
 /*   By: hawayda <hawayda@student.42beirut.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:19:04 by hawayda           #+#    #+#             */
-/*   Updated: 2025/07/28 16:19:04 by hawayda          ###   ########.fr       */
+/*   Updated: 2025/07/30 11:58:13 by hawayda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ void	door_toggle(t_cub *c)
 		}
 		d = d->next;
 	}
-}
-
-bool	cell_is_blocked(t_cub *c, int x, int y)
-{
-	char	ch;
-
-	if (y < 0 || y >= c->map.h || x < 0 || x >= c->map.w)
-		return (true);
-	ch = c->map.grid[y][x];
-	return (ch == '1' || ch == DOOR_CLOSED);
 }
 
 void	draw_mm_closed(t_cub *c, int gx, int gy)

@@ -15,7 +15,7 @@ NAME                    := cub3D
 CC                      := gcc
 AR                      := @ar rcs
 RM                      := @rm -rf
-CFLAGS                  := -g -O0 -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
+CFLAGS                  := -Wall -Wextra -Werror -g -O0 -I lib -I $(LIBFT_DIR) -I $(MLX_DIR)
 OBJDIR                  := objs
 .DEFAULT_GOAL			:= build
 
@@ -38,7 +38,7 @@ DIR						:= $(SRC_DIR)
 # SOURCE FILES   (just filenames; they get prefixed later)
 # ──────────────────────────────────────────────────────────────────────────────
 
-TOP_SRCS                := main.c movements.c utils.c
+TOP_SRCS                := main.c movements.c utils.c collision.c
 
 PARSING_SRCS            := map_validator.c parser.c parser_utils.c parser_helpers.c parser_helpers2.c parser_helpers3.c parse_sprite.c
 
