@@ -27,27 +27,21 @@ static void	draw_tex_column(t_cub *c, t_dda *d, int x)
 	int		tex_y;
 	int		color;
 
-	// Height of the wall line
 	step = 1.0 * c->tex[d->tex_id].img.h / d->line_h;
 	tex_pos = (d->draw_s - HEIGHT / 2 + d->line_h / 2) * step;
-
 	y = d->draw_s;
 	while (y <= d->draw_e)
 	{
-		tex_y = (int)tex_pos & (c->tex[d->tex_id].img.h - 1); // mask if power of 2
+		tex_y = (int)tex_pos & (c->tex[d->tex_id].img.h - 1);
 		tex_pos += step;
-
 		color = *(int *)(c->tex[d->tex_id].img.addr
 				+ tex_y * c->tex[d->tex_id].img.line_len
 				+ d->tex_x * (c->tex[d->tex_id].img.bpp / 8));
-
 		*(int *)(c->frame.addr + y * c->frame.line_len
 				+ x * (c->frame.bpp / 8)) = color;
-
 		y++;
 	}
 }
-
 
 void	cast_column(t_cub *c, int x)
 {
