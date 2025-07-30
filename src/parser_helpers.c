@@ -95,6 +95,7 @@ static char	*grab_texture_path(t_cub *c, const char *p)
 bool	parse_wall_texture(t_cub *c, char *line, int *out_id)
 {
 	int		id;
+	int		fd;
 	char	*path;
 
 	id = get_tex_id(line);
@@ -105,6 +106,10 @@ bool	parse_wall_texture(t_cub *c, char *line, int *out_id)
 	path = grab_texture_path(c, line + 3);
 	if (!path)
 		return (false);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (free(path), c->err = "Texture file not found", false);
+	close(fd);
 	c->tex[id].img.ptr = path;
 	*out_id = id;
 	return (true);
