@@ -234,5 +234,6 @@ void				draw_sprites(t_cub *c);
 void				compute_draw_limits(t_dda *d);
 void				compute_texture_mapping(t_cub *c, t_dda *d);
 void				draw_one_sprite(t_cub *c, t_sprite *s);
+void				apply_movement(t_cub *c);
 
 #endif
