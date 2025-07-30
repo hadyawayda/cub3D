@@ -1,6 +1,0 @@
-// C 217,117ygyt,119 should not take letters (it should give an error)
-// C 217,117,,,,,,,,,,,,,,,,,,,,,,,,119 should not take all the commas only one, it should error out if many
-
-// textures should be above the map (fix error message) it should error out with a message saying that textures should be above the map
-
-// NO assets/textures/north.xpm NO assets/textures/north.xpm (if there is more than one line after direction -> error) error out if multiple textures are defined for the same direction
