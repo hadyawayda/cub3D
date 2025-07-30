@@ -26,9 +26,13 @@ static bool	parse_elements_loop(t_elem_ctx *x)
 			(*x->i)++;
 		else if (parse_wall_texture(x->c, x->lines[*x->i], &id))
 			(*x->i)++;
+		else if (x->c->err)
+			return (false);
 		else if (handle_color_line(x->c, x->lines[*x->i],
 				x->floor_seen, x->ceil_seen))
 			(*x->i)++;
+		else if (x->c->err)
+			return (false);
 		else if (valid_cell(x->lines[*x->i][0]))
 			break ;
 		else

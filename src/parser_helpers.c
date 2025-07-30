@@ -52,30 +52,59 @@ bool	is_cub_file(const char *path)
 **  On success returns true and writes the numeric id; on non‐texture line
 **  returns false; on error sets c->err and returns false as well.
 */
-/* 1. handle a wall-texture line: “NO|SO|WE|EA <path>”         */
-/*    returns true on success, false otherwise.                */
+/* returns 0-3 on success, −1 when the line is NOT a wall-texture tag */
+static int	get_tex_id(const char *line)
+{
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		return (0);
+	if (ft_strncmp(line, "SO ", 3) == 0)
+		return (1);
+	if (ft_strncmp(line, "WE ", 3) == 0)
+		return (2);
+	if (ft_strncmp(line, "EA ", 3) == 0)
+		return (3);
+	return (-1);
+}
+
+/* extract **exactly one** <path> token after the keyword ---------------- */
+static char	*grab_texture_path(t_cub *c, const char *p)
+{
+	const char	*end;
+	char		*path;
+
+	while (*p == ' ')
+		p++;
+	if (*p == '\0')
+		return (c->err = "Missing texture path", NULL);
+	end = p;
+	while (*end && *end != ' ')
+		end++;
+	while (*end == ' ')
+		end++;
+	if (*end != '\0')
+		return (c->err = "Too many arguments for texture", NULL);
+	path = ft_substr(p, 0, end - p);
+	if (!path)
+		return (c->err = "Allocation failure", NULL);
+	if (!has_xpm_ext(path))
+		return (free(path), c->err = "Texture not .xpm", NULL);
+	return (path);
+}
+
+/* main entry: parse a wall-texture line ---------------------------------- */
 bool	parse_wall_texture(t_cub *c, char *line, int *out_id)
 {
 	int		id;
 	char	*path;
 
-	if (!ft_strncmp(line, "NO ", 3))
-		id = 0;
-	else if (!ft_strncmp(line, "SO ", 3))
-		id = 1;
-	else if (!ft_strncmp(line, "WE ", 3))
-		id = 2;
-	else if (!ft_strncmp(line, "EA ", 3))
-		id = 3;
-	else
+	id = get_tex_id(line);
+	if (id == -1)
 		return (false);
 	if (c->tex[id].img.ptr)
 		return (c->err = "Duplicate texture identifier", false);
-	path = ft_strdup(line + 3);
+	path = grab_texture_path(c, line + 3);
 	if (!path)
-		return (c->err = "Allocation failure", false);
-	if (!has_xpm_ext(path))
-		return (free(path), c->err = "Texture not .xpm", false);
+		return (false);
 	c->tex[id].img.ptr = path;
 	*out_id = id;
 	return (true);
